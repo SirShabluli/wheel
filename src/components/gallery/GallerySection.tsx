@@ -1,4 +1,5 @@
 import type { Model } from '../../data/models'
+import RevealSection from '../effects/RevealSection'
 
 interface Props {
   models: Model[]
@@ -7,10 +8,10 @@ interface Props {
 export default function GallerySection({ models }: Props) {
   return (
     <section id="gallery" className="relative z-10 py-24 px-6">
-      <h2 className="section-title reveal">הכירו את הבנות</h2>
-      <p className="section-sub reveal">תסתכל טוב. יש לך רק 3 סיבובים — כדאי לדעת במי אתה רוצה לזכות.</p>
+      <RevealSection><h2 className="section-title">הכירו את הבנות</h2></RevealSection>
+      <RevealSection delay={0.1}><p className="section-sub">תסתכל טוב. יש לך רק 3 סיבובים — כדאי לדעת במי אתה רוצה לזכות.</p></RevealSection>
 
-      <div className="gallery reveal" id="galleryGrid">
+      <RevealSection delay={0.2} className="gallery">
         {models.map(m => (
           <div key={m.id} className="gcard">
             {m.online && (
@@ -40,7 +41,7 @@ export default function GallerySection({ models }: Props) {
             </div>
           </div>
         ))}
-      </div>
+      </RevealSection>
     </section>
   )
 }

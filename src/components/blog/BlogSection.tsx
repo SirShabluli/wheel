@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import RevealSection from '../effects/RevealSection'
 
 interface Article {
   icon: string
@@ -98,10 +99,10 @@ export default function BlogSection() {
 
   return (
     <section id="blog" className="relative z-10 py-24 px-6">
-      <h2 className="section-title reveal">המגזין לגברים</h2>
-      <p className="section-sub reveal">כי לזכות בה בגלגל זה החלק הקל. עכשיו תלמד מה לעשות עם זה.</p>
+      <RevealSection><h2 className="section-title">המגזין לגברים</h2></RevealSection>
+      <RevealSection delay={0.1}><p className="section-sub">כי לזכות בה בגלגל זה החלק הקל. עכשיו תלמד מה לעשות עם זה.</p></RevealSection>
 
-      <div className="blog-grid reveal">
+      <RevealSection delay={0.2} className="blog-grid">
         {ARTICLES.map((a, i) => (
           <article key={i} className="bcard" onClick={() => setOpen(i)}>
             <div className="bicon">{a.icon}</div>
@@ -110,7 +111,7 @@ export default function BlogSection() {
             <span className="readmore">קרא עוד ←</span>
           </article>
         ))}
-      </div>
+      </RevealSection>
 
       {/* Blog Modal */}
       <AnimatePresence>

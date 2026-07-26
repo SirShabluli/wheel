@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { MODELS } from './data/models'
 import type { Model } from './data/models'
 import { useAgeGate } from './hooks/useAgeGate'
 import { useSpins } from './hooks/useSpins'
 
 import ParticleCanvas from './components/effects/ParticleCanvas'
+import RevealSection from './components/effects/RevealSection'
 import AgeGate from './components/ageGate/AgeGate'
 import HeroSection from './components/hero/HeroSection'
 import GallerySection from './components/gallery/GallerySection'
@@ -22,18 +23,6 @@ export default function App() {
   const [modalOpen, setModalOpen] = useState(false)
   const wheelRef = useRef<HTMLElement>(null)
 
-  // Scroll reveal
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
-      { threshold: 0.12 }
-    )
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el))
-    return () => io.disconnect()
-  }, [])
-
-  const scrollToWheel = () => wheelRef.current?.scrollIntoView({ behavior: 'smooth' })
-
   const handleResult = (model: Model) => {
     recordSpin()
     setWinner(model)
@@ -50,25 +39,24 @@ export default function App() {
       <ParticleCanvas />
       <AgeGate confirmed={confirmed} onConfirm={confirm} />
 
-      <HeroSection models={MODELS} onSpin={scrollToWheel} />
+      <HeroSection models={MODELS} />
       <GallerySection models={MODELS} />
 
       {/* Wheel Section */}
       <section ref={wheelRef as React.RefObject<HTMLElement>} id="wheel">
-        <h2 className="section-title reveal">גלגל הזכייה</h2>
-        <p className="section-sub reveal">סיבוב אחד. זכייה אחת. שיחה אחת שתשנה לך את הערב.</p>
+        <RevealSection><h2 className="section-title">גלגל הזכייה</h2></RevealSection>
+        <RevealSection delay={0.1}><p className="section-sub">סיבוב אחד. זכייה אחת. שיחה אחת שתשנה לך את הערב.</p></RevealSection>
 
-        <div className="wheel-wrap reveal">
+        <RevealSection delay={0.2} className="wheel-wrap">
           <SpinWheel models={MODELS} onResult={handleResult} disabled={!canSpin} />
           <SpinsCounter spinsLeft={spinsLeft} maxSpins={maxSpins} />
-
           {!canSpin && (
             <div id="noSpins">
               <p>הסיבובים שלך נגמרו — אבל היא עדיין מחכה לך 👇</p>
               <a href="#gallery"><button className="btn btn-gold">לכל הבנות</button></a>
             </div>
           )}
-        </div>
+        </RevealSection>
       </section>
 
       <Carousel3D models={MODELS} />
