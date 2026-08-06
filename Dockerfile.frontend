@@ -6,6 +6,12 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+
+ARG VITE_API_BASE
+ARG VITE_IMAGES_BASE
+ENV VITE_API_BASE=$VITE_API_BASE
+ENV VITE_IMAGES_BASE=$VITE_IMAGES_BASE
+
 RUN npm run build
 
 # Stage 2: Serve with nginx

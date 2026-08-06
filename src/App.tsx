@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
-import { MODELS } from './data/models'
 import type { Model } from './data/models'
 import { useAgeGate } from './hooks/useAgeGate'
 import { useSpins } from './hooks/useSpins'
+import { useProfiles } from './hooks/useProfiles'
 
 import ParticleCanvas from './components/effects/ParticleCanvas'
 import RevealSection from './components/effects/RevealSection'
@@ -19,6 +19,7 @@ import StickyCta from './components/stickyCta/StickyCta'
 export default function App() {
   const { confirmed, confirm } = useAgeGate()
   const { spinsLeft, canSpin, maxSpins, recordSpin } = useSpins()
+  const { models: MODELS, loading } = useProfiles()
   const [winner, setWinner] = useState<Model | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
   const wheelRef = useRef<HTMLElement>(null)
@@ -33,6 +34,8 @@ export default function App() {
     setModalOpen(false)
     wheelRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  if (loading) return null
 
   return (
     <>

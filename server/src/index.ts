@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import leadsRouter from './routes/leads.router'
+import profilesRouter from './routes/profiles.router'
 
 dotenv.config()
 
@@ -27,6 +28,7 @@ app.use('/api/leads', rateLimit({
 
 // Routes
 app.use('/api/leads', leadsRouter)
+app.use('/api/profiles', profilesRouter)
 
 app.get('/api/health', (_req, res) => res.json({ ok: true }))
 
