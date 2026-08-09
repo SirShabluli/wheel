@@ -17,6 +17,7 @@ router.get('/*path', async (req, res) => {
 
     if (response.ContentType) res.setHeader('Content-Type', response.ContentType)
     res.setHeader('Cache-Control', 'public, max-age=86400')
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
 
     ;(response.Body as Readable).pipe(res)
   } catch {
