@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import type { Model } from '../data/models'
 
-const IMG_BASE = import.meta.env.VITE_IMAGES_BASE ?? ''
 const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3001'
 
 function mapProfile(p: Record<string, unknown>): Model {
   const id = String(p._id ?? p.id ?? '')
   const imgPath = String(p.profileImage ?? '')
-  const imgUrl = imgPath ? `${IMG_BASE}/${imgPath}` : ''
+  const imgUrl = imgPath ? `${API_BASE}/api/images/${imgPath}` : ''
 
   return {
     id,

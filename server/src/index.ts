@@ -6,6 +6,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import leadsRouter from './routes/leads.router'
 import profilesRouter from './routes/profiles.router'
+import imagesRouter from './routes/images.router'
 
 dotenv.config()
 
@@ -29,6 +30,7 @@ app.use('/api/leads', rateLimit({
 // Routes
 app.use('/api/leads', leadsRouter)
 app.use('/api/profiles', profilesRouter)
+app.use('/api/images', imagesRouter)
 
 app.get('/api/health', (_req, res) => res.json({ ok: true }))
 
