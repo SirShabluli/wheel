@@ -8,8 +8,8 @@ const s3 = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 const BUCKET = process.env.S3_BUCKET_NAME || 'telescope-media-us'
 
 // GET /api/images/* — proxy תמונות מ-S3
-router.get('/*', async (req, res) => {
-  const key = (req.params as unknown as string[])[0]
+router.get('/*path', async (req, res) => {
+  const key = (req.params as unknown as { path: string[] }).path.join('/')
 
   try {
     const command = new GetObjectCommand({ Bucket: BUCKET, Key: key })
