@@ -16,11 +16,6 @@ services:
       - mongo
     ports:
       - "3001:3001"
-    environment:
-      PORT: 3001
-      MONGODB_URI: mongodb+srv://eranhaim321_db_user:56bLnZ8kf9iqXNkU@cluster0.pncliin.mongodb.net/test
-      CORS_ORIGIN: http://54.173.144.0:8081
-      # Add your other env vars here (JWT_SECRET, SMTP, etc.)
     env_file:
       - ./server/.env
 
