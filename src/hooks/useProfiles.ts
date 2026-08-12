@@ -6,7 +6,9 @@ const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3001'
 function mapProfile(p: Record<string, unknown>): Model {
   const id = String(p._id ?? p.id ?? '')
   const imgPath = String(p.profileImage ?? '')
-  const imgUrl = imgPath ? `${API_BASE}/api/images/${imgPath}` : ''
+  const imgUrl = imgPath
+    ? imgPath.startsWith('http') ? imgPath : `${API_BASE}/api/images/${imgPath}`
+    : ''
 
   return {
     id,

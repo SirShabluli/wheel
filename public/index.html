@@ -1,559 +1,705 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VELVET — מי מחכה לך הלילה?</title>
-<meta name="description" content="9 רווקות אמיתיות מחכות לך. סובב את גלגל הזכייה, גלה מי ההתאמה שלך והתחל לדבר איתה עוד הלילה. בנוסף: מדריכי דייטינג לגברים — איך להתחיל עם בנות, איך להרשים בחורה ועוד.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#0a0714;
-  --bg2:#120b22;
-  --card:#1a1030;
-  --neon-pink:#ff2e88;
-  --neon-purple:#a855f7;
-  --gold:#f5c542;
-  --text:#f3eefc;
-  --muted:#9b8fb8;
-  --glow-pink:0 0 24px rgba(255,46,136,.55),0 0 60px rgba(255,46,136,.25);
-  --glow-purple:0 0 24px rgba(168,85,247,.5),0 0 60px rgba(168,85,247,.22);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Heebo',sans-serif;
-  background:radial-gradient(1200px 800px at 80% -10%,#2a1050 0%,transparent 60%),
-             radial-gradient(1000px 700px at 10% 110%,#3d0a33 0%,transparent 60%),
-             var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  min-height:100vh;
-}
-::selection{background:var(--neon-pink);color:#fff}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VELVET — מי מחכה לך הלילה?</title>
+    <meta
+      name="description"
+      content="9 רווקות אמיתיות מחכות לך. סובב את גלגל הזכייה, גלה מי ההתאמה שלך והתחל לדבר איתה עוד הלילה. בנוסף: מדריכי דייטינג לגברים — איך להתחיל עם בנות, איך להרשים בחורה ועוד."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root{
+        --bg:#0a0714;
+        --bg2:#120b22;
+        --card:#1a1030;
+        --neon-pink:#ff2e88;
+        --neon-purple:#a855f7;
+        --gold:#f5c542;
+        --text:#f3eefc;
+        --muted:#9b8fb8;
+        --glow-pink:0 0 24px rgba(255,46,136,.55),0 0 60px rgba(255,46,136,.25);
+        --glow-purple:0 0 24px rgba(168,85,247,.5),0 0 60px rgba(168,85,247,.22);
+      }
+      *{margin:0;padding:0;box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{
+        font-family:'Heebo',sans-serif;
+        background:radial-gradient(1200px 800px at 80% -10%,#2a1050 0%,transparent 60%),
+                   radial-gradient(1000px 700px at 10% 110%,#3d0a33 0%,transparent 60%),
+                   var(--bg);
+        color:var(--text);
+        overflow-x:hidden;
+        min-height:100vh;
+      }
+      ::selection{background:var(--neon-pink);color:#fff}
 
-/* ---------- particles canvas ---------- */
-#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+      /* ---------- particles canvas ---------- */
+      #particles{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-/* ---------- age gate ---------- */
-#ageGate{
-  position:fixed;inset:0;z-index:100;
-  background:rgba(8,5,16,.92);
-  backdrop-filter:blur(18px);
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .6s ease,visibility .6s;
-}
-#ageGate.hidden{opacity:0;visibility:hidden}
-.gate-box{
-  text-align:center;padding:48px 40px;max-width:420px;width:90%;
-  background:linear-gradient(160deg,rgba(40,20,70,.75),rgba(20,10,40,.9));
-  border:1px solid rgba(168,85,247,.35);
-  border-radius:24px;
-  box-shadow:var(--glow-purple);
-  animation:gateIn .8s cubic-bezier(.2,.9,.3,1.2);
-}
-@keyframes gateIn{from{transform:scale(.85) translateY(30px);opacity:0}to{transform:none;opacity:1}}
-.gate-box .badge18{
-  width:88px;height:88px;margin:0 auto 20px;border-radius:50%;
-  border:3px solid var(--neon-pink);
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;font-weight:900;color:var(--neon-pink);
-  box-shadow:var(--glow-pink);
-  animation:pulse18 2s infinite;
-}
-@keyframes pulse18{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-.gate-box h2{font-size:26px;font-weight:800;margin-bottom:10px}
-.gate-box p{color:var(--muted);font-size:15px;margin-bottom:28px;line-height:1.6}
-.gate-btns{display:flex;gap:14px;justify-content:center}
-.btn{
-  border:none;cursor:pointer;font-family:inherit;font-weight:800;
-  border-radius:999px;transition:transform .2s,box-shadow .2s,filter .2s;
-}
-.btn:active{transform:scale(.96)}
-.btn-primary{
-  background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple));
-  color:#fff;padding:14px 34px;font-size:17px;
-  box-shadow:var(--glow-pink);
-}
-.btn-primary:hover{filter:brightness(1.15);transform:translateY(-2px)}
-.btn-ghost{
-  background:transparent;color:var(--muted);
-  border:1px solid rgba(155,143,184,.4);padding:14px 26px;font-size:15px;
-}
-.btn-ghost:hover{color:var(--text);border-color:var(--muted)}
-.btn-gold{
-  background:linear-gradient(90deg,var(--gold),#e8963a);color:#1a1030;
-  padding:14px 34px;font-size:16px;
-  box-shadow:0 0 24px rgba(245,197,66,.4);
-}
-.btn-gold:hover{filter:brightness(1.1);transform:translateY(-2px)}
+      /* ---------- age gate ---------- */
+      #ageGate{
+        position:fixed;inset:0;z-index:100;
+        background:rgba(8,5,16,.92);
+        backdrop-filter:blur(18px);
+        display:flex;align-items:center;justify-content:center;
+        transition:opacity .6s ease,visibility .6s;
+      }
+      #ageGate.hidden{opacity:0;visibility:hidden}
+      .gate-box{
+        text-align:center;padding:48px 40px;max-width:420px;width:90%;
+        background:linear-gradient(160deg,rgba(40,20,70,.75),rgba(20,10,40,.9));
+        border:1px solid rgba(168,85,247,.35);
+        border-radius:24px;
+        box-shadow:var(--glow-purple);
+        animation:gateIn .8s cubic-bezier(.2,.9,.3,1.2);
+      }
+      @keyframes gateIn{from{transform:scale(.85) translateY(30px);opacity:0}to{transform:none;opacity:1}}
+      .gate-box .badge18{
+        width:88px;height:88px;margin:0 auto 20px;border-radius:50%;
+        border:3px solid var(--neon-pink);
+        display:flex;align-items:center;justify-content:center;
+        font-size:30px;font-weight:900;color:var(--neon-pink);
+        box-shadow:var(--glow-pink);
+        animation:pulse18 2s infinite;
+      }
+      @keyframes pulse18{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+      .gate-box h2{font-size:26px;font-weight:800;margin-bottom:10px}
+      .gate-box p{color:var(--muted);font-size:15px;margin-bottom:28px;line-height:1.6}
+      .gate-btns{display:flex;gap:14px;justify-content:center}
+      .btn{
+        border:none;cursor:pointer;font-family:inherit;font-weight:800;
+        border-radius:999px;transition:transform .2s,box-shadow .2s,filter .2s;
+      }
+      .btn:active{transform:scale(.96)}
+      .btn-primary{
+        background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple));
+        color:#fff;padding:14px 34px;font-size:17px;
+        box-shadow:var(--glow-pink);
+      }
+      .btn-primary:hover{filter:brightness(1.15);transform:translateY(-2px)}
+      .btn-ghost{
+        background:transparent;color:var(--muted);
+        border:1px solid rgba(155,143,184,.4);padding:14px 26px;font-size:15px;
+      }
+      .btn-ghost:hover{color:var(--text);border-color:var(--muted)}
+      .btn-gold{
+        background:linear-gradient(90deg,var(--gold),#e8963a);color:#1a1030;
+        padding:14px 34px;font-size:16px;
+        box-shadow:0 0 24px rgba(245,197,66,.4);
+      }
+      .btn-gold:hover{filter:brightness(1.1);transform:translateY(-2px)}
 
-/* ---------- hero ---------- */
-.hero{
-  position:relative;z-index:1;min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:24px;
-}
-.logo{
-  font-size:15px;letter-spacing:.5em;font-weight:300;color:var(--gold);
-  margin-bottom:22px;text-transform:uppercase;
-}
-.hero h1{
-  font-size:clamp(38px,7vw,74px);font-weight:900;line-height:1.15;
-  background:linear-gradient(92deg,#fff 20%,var(--neon-pink) 60%,var(--neon-purple));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 30px rgba(255,46,136,.35));
-  margin-bottom:18px;
-}
-.hero .sub{font-size:clamp(16px,2.4vw,21px);color:var(--muted);max-width:600px;margin-bottom:40px;line-height:1.7}
-.hero .sub b{color:var(--text)}
+      /* ---------- hero ---------- */
+      .hero{
+        position:relative;z-index:1;min-height:100vh;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        text-align:center;padding:24px;
+      }
+      .logo{
+        font-size:15px;letter-spacing:.5em;font-weight:300;color:var(--gold);
+        margin-bottom:22px;text-transform:uppercase;
+      }
+      .hero h1{
+        font-size:clamp(38px,7vw,74px);font-weight:900;line-height:1.15;
+        background:linear-gradient(92deg,#fff 20%,var(--neon-pink) 60%,var(--neon-purple));
+        -webkit-background-clip:text;background-clip:text;color:transparent;
+        filter:drop-shadow(0 0 30px rgba(255,46,136,.35));
+        margin-bottom:18px;
+      }
+      .hero .sub{font-size:clamp(16px,2.4vw,21px);color:var(--muted);max-width:600px;margin-bottom:40px;line-height:1.7}
+      .hero .sub b{color:var(--text)}
 
-/* hero collage / hero image */
-.hero-visual{margin-bottom:30px;max-width:760px;width:100%}
-.hero-visual .hero-img{
-  width:100%;border-radius:24px;display:block;
-  border:1px solid rgba(255,46,136,.45);box-shadow:var(--glow-pink);
-}
-.hero-collage{display:flex;justify-content:center;padding:10px 0}
-.hero-collage a{
-  display:block;width:clamp(56px,9vw,92px);height:clamp(56px,9vw,92px);
-  border-radius:50%;overflow:hidden;margin-left:clamp(-22px,-2.4vw,-14px);
-  border:3px solid var(--neon-pink);
-  box-shadow:0 0 18px rgba(255,46,136,.45);
-  background:var(--card);
-  transition:transform .25s,box-shadow .25s,z-index 0s;
-  position:relative;
-}
-.hero-collage a:hover{transform:translateY(-10px) scale(1.12);z-index:5;box-shadow:var(--glow-pink)}
-.hero-collage img{width:100%;height:100%;object-fit:cover}
-.hero-kicker{
-  color:var(--gold);font-weight:800;font-size:clamp(14px,2vw,17px);
-  letter-spacing:.06em;margin-bottom:10px;
-}
-.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.cta-big{
-  padding:20px 52px;font-size:21px;position:relative;overflow:hidden;
-}
-.cta-big::after{
-  content:'';position:absolute;top:0;right:-120%;width:60%;height:100%;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
-  animation:shine 3s infinite;
-}
-@keyframes shine{0%{right:-120%}45%,100%{right:130%}}
-.scroll-hint{margin-top:60px;color:var(--muted);font-size:13px;animation:bob 2s infinite}
-.scroll-hint span{display:block;font-size:22px;margin-top:4px}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+      /* hero collage / hero image */
+      .hero-visual{margin-bottom:30px;max-width:760px;width:100%}
+      .hero-visual .hero-img{
+        width:100%;border-radius:24px;display:block;
+        border:1px solid rgba(255,46,136,.45);box-shadow:var(--glow-pink);
+      }
+      .hero-collage{display:flex;justify-content:center;padding:10px 0}
+      .hero-collage a{
+        display:block;width:clamp(56px,9vw,92px);height:clamp(56px,9vw,92px);
+        border-radius:50%;overflow:hidden;margin-left:clamp(-22px,-2.4vw,-14px);
+        border:3px solid var(--neon-pink);
+        box-shadow:0 0 18px rgba(255,46,136,.45);
+        background:var(--card);
+        transition:transform .25s,box-shadow .25s,z-index 0s;
+        position:relative;
+      }
+      .hero-collage a:hover{transform:translateY(-10px) scale(1.12);z-index:5;box-shadow:var(--glow-pink)}
+      .hero-collage img{width:100%;height:100%;object-fit:cover}
+      .hero-kicker{
+        color:var(--gold);font-weight:800;font-size:clamp(14px,2vw,17px);
+        letter-spacing:.06em;margin-bottom:10px;
+      }
+      .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+      .cta-big{
+        padding:20px 52px;font-size:21px;position:relative;overflow:hidden;
+      }
+      .cta-big::after{
+        content:'';position:absolute;top:0;right:-120%;width:60%;height:100%;
+        background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+        animation:shine 3s infinite;
+      }
+      @keyframes shine{0%{right:-120%}45%,100%{right:130%}}
+      .scroll-hint{margin-top:60px;color:var(--muted);font-size:13px;animation:bob 2s infinite}
+      .scroll-hint span{display:block;font-size:22px;margin-top:4px}
+      @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 
-/* ---------- sections ---------- */
-section{position:relative;z-index:1;padding:90px 24px}
-.section-title{text-align:center;font-size:clamp(28px,4.5vw,44px);font-weight:900;margin-bottom:10px}
-.section-sub{text-align:center;color:var(--muted);margin-bottom:56px;font-size:17px;line-height:1.7}
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
-.reveal.visible{opacity:1;transform:none}
+      /* ---------- sections ---------- */
+      section{position:relative;z-index:1;padding:90px 24px}
+      .section-title{text-align:center;font-size:clamp(28px,4.5vw,44px);font-weight:900;margin-bottom:10px}
+      .section-sub{text-align:center;color:var(--muted);margin-bottom:56px;font-size:17px;line-height:1.7}
+      .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+      .reveal.visible{opacity:1;transform:none}
 
-/* ---------- gallery grid ---------- */
-.gallery{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
-.gcard{
-  border-radius:20px;overflow:hidden;background:var(--card);
-  border:1px solid rgba(168,85,247,.28);
-  transition:transform .3s,box-shadow .3s,border-color .3s;
-  display:flex;flex-direction:column;position:relative;
-}
-.gcard:hover{transform:translateY(-8px);box-shadow:var(--glow-purple);border-color:rgba(168,85,247,.7)}
-.gcard .gph{
-  height:250px;display:flex;align-items:center;justify-content:center;
-  font-size:64px;font-weight:900;color:rgba(255,255,255,.92);
-  position:relative;background-size:cover;background-position:center top;
-}
-.gcard .gph::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(16,8,34,.95))}
-.gcard .gph img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.gbody{padding:16px 18px 20px;background:rgba(16,8,34,.95);flex:1;display:flex;flex-direction:column}
-.gbody h4{font-size:20px;font-weight:800}
-.gbody .tag{color:var(--muted);font-size:13.5px;margin:4px 0 16px;line-height:1.5;flex:1}
-.gbtns{display:flex;gap:8px}
-.gbtns .btn{flex:1;padding:11px 6px;font-size:13.5px;text-decoration:none;text-align:center}
-.gbtns .btn-outline{
-  background:rgba(245,197,66,.08);color:var(--gold);
-  border:1px solid rgba(245,197,66,.5);
-}
-.gbtns .btn-outline:hover{background:rgba(245,197,66,.2)}
+      /* ---------- gallery grid ---------- */
+      .gallery{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+      .gcard{
+        border-radius:20px;overflow:hidden;background:var(--card);
+        border:1px solid rgba(168,85,247,.28);
+        transition:transform .3s,box-shadow .3s,border-color .3s;
+        display:flex;flex-direction:column;position:relative;
+      }
+      .gcard:hover{transform:translateY(-8px);box-shadow:var(--glow-purple);border-color:rgba(168,85,247,.7)}
+      .gcard .gph{
+        height:250px;display:flex;align-items:center;justify-content:center;
+        font-size:64px;font-weight:900;color:rgba(255,255,255,.92);   
+        position:relative;background-size:cover;background-position:center top;
+      }
+      .gcard .gph::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(16,8,34,.95))}
+      .gcard .gph img{width:100%;height:100%;object-fit:cover;object-position:center top}
+      .gbody{padding:16px 18px 20px;background:rgba(16,8,34,.95);flex:1;display:flex;flex-direction:column}
+      .gbody h4{font-size:20px;font-weight:800}
+      .gbody .tag{color:var(--muted);font-size:13.5px;margin:4px 0 16px;line-height:1.5;flex:1}
+      .gbtns{display:flex;gap:8px}
+      .gbtns .btn{flex:1;padding:11px 6px;font-size:13.5px;text-decoration:none;text-align:center}
+      .gbtns .btn-outline{
+        background:rgba(245,197,66,.08);color:var(--gold);
+        border:1px solid rgba(245,197,66,.5);
+      }
+      .gbtns .btn-outline:hover{background:rgba(245,197,66,.2)}
 
-/* ---------- wheel ---------- */
-.wheel-wrap{display:flex;flex-direction:column;align-items:center}
-.wheel-stage{position:relative;width:min(86vw,480px);height:min(86vw,480px);margin-bottom:36px}
-#wheelCanvas{width:100%;height:100%;border-radius:50%;
-  box-shadow:0 0 0 8px #1e1136,0 0 0 10px rgba(245,197,66,.6),var(--glow-purple);
-}
-.wheel-pointer{
-  position:absolute;top:-8px;left:50%;transform:translateX(-50%);
-  width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;
-  border-top:30px solid var(--gold);
-  filter:drop-shadow(0 0 10px rgba(245,197,66,.8));z-index:2;
-}
-.wheel-hub{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:78px;height:78px;border-radius:50%;z-index:2;
-  background:radial-gradient(circle at 35% 30%,#3a2364,#160b2c);
-  border:2px solid var(--gold);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:900;font-size:13px;color:var(--gold);text-align:center;line-height:1.2;
-}
-#spinBtn{padding:18px 60px;font-size:20px}
-#spinBtn:disabled{opacity:.55;cursor:not-allowed;filter:grayscale(.4)}
-.spins-left{
-  margin-top:16px;display:flex;gap:8px;align-items:center;justify-content:center;
-}
-.spins-left .dot{
-  width:14px;height:14px;border-radius:50%;
-  background:var(--gold);box-shadow:0 0 10px rgba(245,197,66,.7);
-  transition:.4s;
-}
-.spins-left .dot.used{background:#3a2f55;box-shadow:none;transform:scale(.75)}
-.spin-note{margin-top:10px;color:var(--muted);font-size:13px;text-align:center;line-height:1.7}
-#noSpins{display:none;margin-top:18px;text-align:center}
-#noSpins p{color:var(--text);font-size:16px;margin-bottom:14px}
+      /* ---------- wheel ---------- */
+      .wheel-wrap{display:flex;flex-direction:column;align-items:center}
+      .wheel-stage{position:relative;width:min(86vw,480px);height:min(86vw,480px);margin-bottom:36px}
+      #wheelCanvas{width:100%;height:100%;border-radius:50%;
+        box-shadow:0 0 0 8px #1e1136,0 0 0 10px rgba(245,197,66,.6),var(--glow-purple);
+      }
+      .wheel-pointer{
+        position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+        width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;
+        border-top:30px solid var(--gold);
+        filter:drop-shadow(0 0 10px rgba(245,197,66,.8));z-index:2;
+      }
+      .wheel-hub{
+        position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+        width:78px;height:78px;border-radius:50%;z-index:2;
+        background:radial-gradient(circle at 35% 30%,#3a2364,#160b2c);
+        border:2px solid var(--gold);
+        display:flex;align-items:center;justify-content:center;
+        font-weight:900;font-size:13px;color:var(--gold);text-align:center;line-height:1.2;
+      }
+      #spinBtn{padding:18px 60px;font-size:20px}
+      #spinBtn:disabled{opacity:.55;cursor:not-allowed;filter:grayscale(.4)}
+      .spins-left{
+        margin-top:16px;display:flex;gap:8px;align-items:center;justify-content:center;
+      }
+      .spins-left .dot{
+        width:14px;height:14px;border-radius:50%;
+        background:var(--gold);box-shadow:0 0 10px rgba(245,197,66,.7);
+        transition:.4s;
+      }
+      .spins-left .dot.used{background:#3a2f55;box-shadow:none;transform:scale(.75)}
+      .spin-note{margin-top:10px;color:var(--muted);font-size:13px;text-align:center;line-height:1.7}
+      #noSpins{display:none;margin-top:18px;text-align:center}
+      #noSpins p{color:var(--text);font-size:16px;margin-bottom:14px}
 
-/* ---------- match modal ---------- */
-#matchModal{
-  position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;
-  background:rgba(8,5,16,.85);backdrop-filter:blur(10px);
-  opacity:0;visibility:hidden;transition:.45s;
-}
-#matchModal.show{opacity:1;visibility:visible}
-.match-card{
-  width:92%;max-width:400px;border-radius:26px;overflow:hidden;text-align:center;
-  background:linear-gradient(170deg,#241245,#150a2b);
-  border:1px solid rgba(255,46,136,.45);
-  box-shadow:var(--glow-pink);
-  transform:scale(.8) rotate(-3deg);transition:transform .5s cubic-bezier(.2,.9,.3,1.3);
-}
-#matchModal.show .match-card{transform:none}
-.match-avatar{height:250px;display:flex;align-items:center;justify-content:center;font-size:84px;font-weight:900;color:rgba(255,255,255,.9);position:relative;background-size:cover;background-position:center top}
-.match-avatar::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 55%,#1c0e38)}
-.match-body{padding:8px 28px 30px;position:relative}
-.match-label{
-  display:inline-block;background:var(--gold);color:#1a1030;font-weight:900;font-size:12px;
-  padding:6px 18px;border-radius:999px;transform:translateY(-50%);
-  box-shadow:0 0 18px rgba(245,197,66,.6);
-}
-.match-body h3{font-size:30px;font-weight:900;margin-bottom:6px}
-.match-body p{color:var(--muted);font-size:15px;margin-bottom:22px;line-height:1.6}
-.match-body .btn-primary{width:100%;padding:16px;font-size:18px;display:block;text-decoration:none;margin-bottom:12px}
-.match-body .again{background:none;border:none;color:var(--muted);cursor:pointer;font-family:inherit;font-size:14px;text-decoration:underline}
-.match-body .again:hover{color:var(--text)}
-.match-body .again.hide{display:none}
+      /* ---------- match modal ---------- */
+      #matchModal{
+        position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;
+        background:rgba(8,5,16,.85);backdrop-filter:blur(10px);
+        opacity:0;visibility:hidden;transition:.45s;
+      }
+      #matchModal.show{opacity:1;visibility:visible}
+      .match-card{
+        width:92%;max-width:400px;border-radius:26px;overflow:hidden;text-align:center;
+        background:linear-gradient(170deg,#241245,#150a2b);
+        border:1px solid rgba(255,46,136,.45);
+        box-shadow:var(--glow-pink);
+        transform:scale(.8) rotate(-3deg);transition:transform .5s cubic-bezier(.2,.9,.3,1.3);
+      }
+      #matchModal.show .match-card{transform:none}
+      .match-avatar{height:250px;display:flex;align-items:center;justify-content:center;font-size:84px;font-weight:900;color:rgba(255,255,255,.9);position:relative;background-size:cover;background-position:center top}
+      .match-avatar::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 55%,#1c0e38)}
+      .match-body{padding:8px 28px 30px;position:relative}
+      .match-label{
+        display:inline-block;background:var(--gold);color:#1a1030;font-weight:900;font-size:12px;
+        padding:6px 18px;border-radius:999px;transform:translateY(-50%);
+        box-shadow:0 0 18px rgba(245,197,66,.6);
+      }
+      .match-body h3{font-size:30px;font-weight:900;margin-bottom:6px}
+      .match-body p{color:var(--muted);font-size:15px;margin-bottom:22px;line-height:1.6}
+      .match-body .btn-primary{width:100%;padding:16px;font-size:18px;display:block;text-decoration:none;margin-bottom:12px}
+      .match-body .again{background:none;border:none;color:var(--muted);cursor:pointer;font-family:inherit;font-size:14px;text-decoration:underline}
+      .match-body .again:hover{color:var(--text)}
+      .match-body .again.hide{display:none}
 
-/* ---------- 3D carousel ---------- */
-.carousel-section{overflow:hidden}
-.scene{
-  width:280px;height:420px;margin:0 auto;perspective:1300px;position:relative;
-}
-.ring{
-  width:100%;height:100%;position:absolute;transform-style:preserve-3d;
-  transition:transform .9s cubic-bezier(.25,.8,.3,1);
-}
-.card3d{
-  position:absolute;inset:0;border-radius:22px;overflow:hidden;cursor:pointer;
-  background:var(--card);
-  border:1px solid rgba(168,85,247,.35);
-  box-shadow:0 20px 50px rgba(0,0,0,.55);
-  backface-visibility:hidden;
-  display:flex;flex-direction:column;
-}
-.card3d .ph{
-  flex:1;display:flex;align-items:center;justify-content:center;
-  font-size:72px;font-weight:900;color:rgba(255,255,255,.92);position:relative;
-  background-size:cover;background-position:center top;
-}
-.card3d .ph::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(16,8,34,.95))}
-.online{
-  position:absolute;top:14px;right:14px;z-index:2;
-  background:rgba(10,7,20,.7);border:1px solid rgba(74,222,128,.5);
-  color:#4ade80;font-size:12px;font-weight:600;
-  padding:5px 12px;border-radius:999px;display:flex;align-items:center;gap:6px;
-  backdrop-filter:blur(6px);
-}
-.online i{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;animation:blink 1.6s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
-.card-info{padding:16px 18px 20px;position:relative;z-index:1;background:rgba(16,8,34,.95)}
-.card-info h4{font-size:21px;font-weight:800}
-.card-info .tag{color:var(--muted);font-size:13.5px;margin:4px 0 14px;line-height:1.5}
-.card-info .btn-primary{width:100%;padding:12px;font-size:15px;display:block;text-decoration:none;text-align:center}
-.carousel-nav{display:flex;gap:18px;justify-content:center;margin-top:46px;align-items:center}
-.nav-btn{
-  width:54px;height:54px;border-radius:50%;font-size:22px;color:var(--text);
-  background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.5);
-}
-.nav-btn:hover{background:rgba(168,85,247,.35);box-shadow:var(--glow-purple)}
-.carousel-hint{text-align:center;color:var(--muted);font-size:13px;margin-top:18px}
+      /* ---------- 3D carousel ---------- */
+      .carousel-section{overflow:hidden}
+      .scene{
+        width:280px;height:420px;margin:0 auto;perspective:1300px;position:relative;
+      }
+      .ring{
+        width:100%;height:100%;position:absolute;transform-style:preserve-3d;
+        transition:transform .9s cubic-bezier(.25,.8,.3,1);
+      }
+      .card3d{
+        position:absolute;inset:0;border-radius:22px;overflow:hidden;cursor:pointer;
+        background:var(--card);
+        border:1px solid rgba(168,85,247,.35);
+        box-shadow:0 20px 50px rgba(0,0,0,.55);
+        backface-visibility:hidden;
+        display:flex;flex-direction:column;
+      }
+      .card3d .ph{
+        flex:1;display:flex;align-items:center;justify-content:center;
+        font-size:72px;font-weight:900;color:rgba(255,255,255,.92);position:relative;
+        background-size:cover;background-position:center top;
+      }
+      .card3d .ph::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(16,8,34,.95))}
+      .online{
+        position:absolute;top:14px;right:14px;z-index:2;
+        background:rgba(10,7,20,.7);border:1px solid rgba(74,222,128,.5);
+        color:#4ade80;font-size:12px;font-weight:600;
+        padding:5px 12px;border-radius:999px;display:flex;align-items:center;gap:6px;
+        backdrop-filter:blur(6px);
+      }
+      .online i{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;animation:blink 1.6s infinite}
+      @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+      .card-info{padding:16px 18px 20px;position:relative;z-index:1;background:rgba(16,8,34,.95)}
+      .card-info h4{font-size:21px;font-weight:800}
+      .card-info .tag{color:var(--muted);font-size:13.5px;margin:4px 0 14px;line-height:1.5}
+      .card-info .btn-primary{width:100%;padding:12px;font-size:15px;display:block;text-decoration:none;text-align:center}
+      .carousel-nav{display:flex;gap:18px;justify-content:center;margin-top:46px;align-items:center}
+      .nav-btn{
+        width:54px;height:54px;border-radius:50%;font-size:22px;color:var(--text);
+        background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.5);
+      }
+      .nav-btn:hover{background:rgba(168,85,247,.35);box-shadow:var(--glow-purple)}
+      .carousel-hint{text-align:center;color:var(--muted);font-size:13px;margin-top:18px}
 
-/* ---------- sticky cta ---------- */
-#stickyCta{
-  position:fixed;bottom:18px;left:50%;transform:translate(-50%,120px);
-  z-index:80;transition:transform .5s cubic-bezier(.2,.9,.3,1.2);
-  display:flex;gap:10px;align-items:center;
-  background:rgba(20,10,40,.85);backdrop-filter:blur(12px);
-  border:1px solid rgba(255,46,136,.4);border-radius:999px;padding:8px 10px 8px 22px;
-  box-shadow:0 10px 40px rgba(0,0,0,.5);
-  white-space:nowrap;
-}
-#stickyCta.show{transform:translate(-50%,0)}
-#stickyCta span{font-size:14px;color:var(--text)}
-#stickyCta .btn-primary{padding:10px 22px;font-size:14px;text-decoration:none}
+      /* ---------- sticky cta ---------- */
+      #stickyCta{
+        position:fixed;bottom:18px;left:50%;transform:translate(-50%,120px);
+        z-index:80;transition:transform .5s cubic-bezier(.2,.9,.3,1.2);
+        display:flex;gap:10px;align-items:center;
+        background:rgba(20,10,40,.85);backdrop-filter:blur(12px);
+        border:1px solid rgba(255,46,136,.4);border-radius:999px;padding:8px 10px 8px 22px;
+        box-shadow:0 10px 40px rgba(0,0,0,.5);
+        white-space:nowrap;
+      }
+      #stickyCta.show{transform:translate(-50%,0)}
+      #stickyCta span{font-size:14px;color:var(--text)}
+      #stickyCta .btn-primary{padding:10px 22px;font-size:14px;text-decoration:none}
 
-/* ---------- footer ---------- */
-footer{position:relative;z-index:1;text-align:center;padding:40px 24px 60px;color:var(--muted);font-size:13px;line-height:2}
-footer .logo{margin-bottom:8px}
+      /* ---------- footer ---------- */
+      footer{position:relative;z-index:1;text-align:center;padding:40px 24px 60px;color:var(--muted);font-size:13px;line-height:2}
+      footer .logo{margin-bottom:8px}
 
-/* ---------- blog ---------- */
-.blog-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
-.bcard{
-  background:var(--card);border:1px solid rgba(245,197,66,.25);border-radius:20px;
-  padding:26px 24px;cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s;
-  display:flex;flex-direction:column;
-}
-.bcard:hover{transform:translateY(-6px);border-color:rgba(245,197,66,.6);box-shadow:0 0 30px rgba(245,197,66,.18)}
-.bcard .bicon{font-size:34px;margin-bottom:14px}
-.bcard h3{font-size:19px;font-weight:800;margin-bottom:8px;line-height:1.4}
-.bcard p{color:var(--muted);font-size:14px;line-height:1.6;flex:1;margin-bottom:16px}
-.bcard .readmore{color:var(--gold);font-weight:800;font-size:14px}
-#blogModal{
-  position:fixed;inset:0;z-index:92;display:flex;align-items:center;justify-content:center;
-  background:rgba(8,5,16,.88);backdrop-filter:blur(10px);
-  opacity:0;visibility:hidden;transition:.4s;padding:20px;
-}
-#blogModal.show{opacity:1;visibility:visible}
-.blog-article{
-  width:100%;max-width:640px;max-height:82vh;overflow-y:auto;border-radius:24px;
-  background:linear-gradient(170deg,#221244,#140a29);
-  border:1px solid rgba(245,197,66,.4);
-  padding:38px 34px;position:relative;
-  transform:translateY(30px);transition:transform .4s;
-}
-#blogModal.show .blog-article{transform:none}
-.blog-article h2{font-size:26px;font-weight:900;margin-bottom:6px;color:var(--gold)}
-.blog-article .bmeta{color:var(--muted);font-size:13px;margin-bottom:20px}
-.blog-article h3{font-size:18px;font-weight:800;margin:22px 0 8px}
-.blog-article p{color:#d9d0ee;font-size:15.5px;line-height:1.85;margin-bottom:12px}
-.blog-article .close-x{
-  position:absolute;top:16px;left:16px;width:38px;height:38px;border-radius:50%;
-  background:rgba(255,255,255,.08);color:var(--text);font-size:18px;
-}
-.blog-article .close-x:hover{background:rgba(255,46,136,.3)}
-.blog-article .article-cta{
-  margin-top:26px;padding:20px;border-radius:16px;text-align:center;
-  background:rgba(255,46,136,.08);border:1px solid rgba(255,46,136,.3);
-}
-.blog-article .article-cta p{margin-bottom:14px;color:var(--text)}
-.blog-article .article-cta a{text-decoration:none;display:inline-block}
+      /* ---------- blog ---------- */
+      .blog-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+      .bcard{
+        background:var(--card);border:1px solid rgba(245,197,66,.25);border-radius:20px;
+        padding:26px 24px;cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s;
+        display:flex;flex-direction:column;
+      }
+      .bcard:hover{transform:translateY(-6px);border-color:rgba(245,197,66,.6);box-shadow:0 0 30px rgba(245,197,66,.18)}
+      .bcard .bicon{font-size:34px;margin-bottom:14px}
+      .bcard h3{font-size:19px;font-weight:800;margin-bottom:8px;line-height:1.4}
+      .bcard p{color:var(--muted);font-size:14px;line-height:1.6;flex:1;margin-bottom:16px}
+      .bcard .readmore{color:var(--gold);font-weight:800;font-size:14px}
+      #blogModal{
+        position:fixed;inset:0;z-index:92;display:flex;align-items:center;justify-content:center;
+        background:rgba(8,5,16,.88);backdrop-filter:blur(10px);
+        opacity:0;visibility:hidden;transition:.4s;padding:20px;
+      }
+      #blogModal.show{opacity:1;visibility:visible}
+      .blog-article{
+        width:100%;max-width:640px;max-height:82vh;overflow-y:auto;border-radius:24px;
+        background:linear-gradient(170deg,#221244,#140a29);
+        border:1px solid rgba(245,197,66,.4);
+        padding:38px 34px;position:relative;
+        transform:translateY(30px);transition:transform .4s;
+      }
+      #blogModal.show .blog-article{transform:none}
+      .blog-article h2{font-size:26px;font-weight:900;margin-bottom:6px;color:var(--gold)}
+      .blog-article .bmeta{color:var(--muted);font-size:13px;margin-bottom:20px}
+      .blog-article h3{font-size:18px;font-weight:800;margin:22px 0 8px}
+      .blog-article p{color:#d9d0ee;font-size:15.5px;line-height:1.85;margin-bottom:12px}
+      .blog-article .close-x{
+        position:absolute;top:16px;left:16px;width:38px;height:38px;border-radius:50%;
+        background:rgba(255,255,255,.08);color:var(--text);font-size:18px;
+      }
+      .blog-article .close-x:hover{background:rgba(255,46,136,.3)}
+      .blog-article .article-cta{
+        margin-top:26px;padding:20px;border-radius:16px;text-align:center;
+        background:rgba(255,46,136,.08);border:1px solid rgba(255,46,136,.3);
+      }
+      .blog-article .article-cta p{margin-bottom:14px;color:var(--text)}
+      .blog-article .article-cta a{text-decoration:none;display:inline-block}
 
-/* ---------- confetti ---------- */
-.confetti{position:fixed;width:10px;height:16px;top:-20px;z-index:95;pointer-events:none;border-radius:2px}
+      /* ---------- confetti ---------- */
+      .confetti{position:fixed;width:10px;height:16px;top:-20px;z-index:95;pointer-events:none;border-radius:2px}
 
-@media (max-width:520px){
-  .scene{width:230px;height:370px}
-  .gate-btns{flex-direction:column}
-}
-</style>
-</head>
-<body>
+      @media (max-width:520px){
+        .scene{width:230px;height:370px}
+        .gate-btns{flex-direction:column}
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="particles"></canvas>
 
-<canvas id="particles"></canvas>
-
-<!-- ======== AGE GATE ======== -->
-<div id="ageGate">
-  <div class="gate-box">
-    <div class="badge18">18+</div>
-    <h2>רגע לפני שנכנסים...</h2>
-    <p>האתר מכיל תוכן המיועד לבגירים בלבד.<br>כניסתך מהווה אישור כי מלאו לך 18 שנים.</p>
-    <div class="gate-btns">
-      <button class="btn btn-primary" id="gateYes">אני מעל 18 — תכניסו אותי</button>
-      <button class="btn btn-ghost" onclick="location.href='https://www.google.com'">עדיין לא</button>
+    <!-- ======== AGE GATE ======== -->
+    <div id="ageGate">
+      <div class="gate-box">
+        <div class="badge18">18+</div>
+        <h2>רגע לפני שנכנסים...</h2>
+        <p>
+          האתר מכיל תוכן המיועד לבגירים בלבד.<br />כניסתך מהווה אישור כי מלאו לך
+          18 שנים.
+        </p>
+        <div class="gate-btns">
+          <button class="btn btn-primary" id="gateYes">
+            אני מעל 18 — תכניסו אותי
+          </button>
+          <button
+            class="btn btn-ghost"
+            onclick="location.href = 'https://www.google.com'"
+          >
+            עדיין לא
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- ======== HERO ======== -->
-<header class="hero">
-  <div class="logo">V E L V E T</div>
-  <div class="hero-kicker">9 רווקות · אונליין עכשיו · גלגל אחד</div>
-  <h1>הרווקה הבאה שתכבוש אותך<br>נמצאת על הגלגל</h1>
-  <div class="hero-visual" id="heroVisual"></div>
-  <p class="sub">כל אחת מהן שווה סיבוב. אבל יש לך <b>3 סיבובים בלבד</b> — אז תסתכל טוב, תבחר במי אתה רוצה לזכות, ותן לגלגל להחליט אם מגיע לך.</p>
-  <div class="hero-ctas">
-    <a href="#gallery"><button class="btn btn-gold cta-big">קודם תראה את כולן</button></a>
-    <a href="#wheel"><button class="btn btn-primary cta-big">ישר לגלגל ↓</button></a>
-  </div>
-  <div class="scroll-hint">גלול למטה<span>⌄</span></div>
-</header>
+    <!-- ======== HERO ======== -->
+    <header class="hero">
+      <div class="logo">V E L V E T</div>
+      <div class="hero-kicker">9 רווקות · אונליין עכשיו · גלגל אחד</div>
+      <h1>הרווקה הבאה שתכבוש אותך<br />נמצאת על הגלגל</h1>
+      <div class="hero-visual" id="heroVisual"></div>
+      <p class="sub">
+        כל אחת מהן שווה סיבוב. אבל יש לך <b>3 סיבובים בלבד</b> — אז תסתכל טוב,
+        תבחר במי אתה רוצה לזכות, ותן לגלגל להחליט אם מגיע לך.
+      </p>
+      <div class="hero-ctas">
+        <a href="#gallery"
+          ><button class="btn btn-gold cta-big">קודם תראה את כולן</button></a
+        >
+        <a href="#wheel"
+          ><button class="btn btn-primary cta-big">ישר לגלגל ↓</button></a
+        >
+      </div>
+      <div class="scroll-hint">גלול למטה<span>⌄</span></div>
+    </header>
 
-<!-- ======== GALLERY ======== -->
-<section id="gallery">
-  <h2 class="section-title reveal">הכירו את הבנות</h2>
-  <p class="section-sub reveal">תסתכל טוב. יש לך רק 3 סיבובים — כדאי לדעת במי אתה רוצה לזכות.</p>
-  <div class="gallery reveal" id="galleryGrid"></div>
-</section>
+    <!-- ======== GALLERY ======== -->
+    <section id="gallery">
+      <h2 class="section-title reveal">הכירו את הבנות</h2>
+      <p class="section-sub reveal">
+        תסתכל טוב. יש לך רק 3 סיבובים — כדאי לדעת במי אתה רוצה לזכות.
+      </p>
+      <div class="gallery reveal" id="galleryGrid"></div>
+    </section>
 
-<!-- ======== WHEEL ======== -->
-<section id="wheel">
-  <h2 class="section-title reveal">גלגל הזכייה</h2>
-  <p class="section-sub reveal">סיבוב אחד. זכייה אחת. שיחה אחת שתשנה לך את הערב.</p>
-  <div class="wheel-wrap reveal">
-    <div class="wheel-stage">
-      <div class="wheel-pointer"></div>
-      <canvas id="wheelCanvas" width="960" height="960"></canvas>
-      <div class="wheel-hub">במי<br>תזכה?</div>
+    <!-- ======== WHEEL ======== -->
+    <section id="wheel">
+      <h2 class="section-title reveal">גלגל הזכייה</h2>
+      <p class="section-sub reveal">
+        סיבוב אחד. זכייה אחת. שיחה אחת שתשנה לך את הערב.
+      </p>
+      <div class="wheel-wrap reveal">
+        <div class="wheel-stage">
+          <div class="wheel-pointer"></div>
+          <canvas id="wheelCanvas" width="960" height="960"></canvas>
+          <div class="wheel-hub">במי<br />תזכה?</div>
+        </div>
+        <button class="btn btn-primary" id="spinBtn">סובב את הגלגל</button>
+        <div class="spins-left" id="spinsDots"></div>
+        <div class="spin-note">
+          בלי הרשמה · בלי עלות · <span id="spinsText">3 סיבובים לאורח</span>
+        </div>
+        <div id="noSpins">
+          <p>הסיבובים שלך נגמרו — אבל היא עדיין מחכה לך 👇</p>
+          <a href="#gallery"><button class="btn btn-gold">לכל הבנות</button></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== MATCH MODAL ======== -->
+    <div id="matchModal">
+      <div class="match-card">
+        <div class="match-avatar" id="matchAvatar">?</div>
+        <div class="match-body">
+          <span class="match-label">✦ זכית בה ✦</span>
+          <h3 id="matchName"></h3>
+          <p id="matchTag"></p>
+          <a
+            class="btn btn-primary"
+            id="matchLink"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            >התחל לדבר איתה עכשיו →</a
+          >
+          <button class="again" id="spinAgain">או... נסה את מזלך שוב</button>
+        </div>
+      </div>
     </div>
-    <button class="btn btn-primary" id="spinBtn">סובב את הגלגל</button>
-    <div class="spins-left" id="spinsDots"></div>
-    <div class="spin-note">בלי הרשמה · בלי עלות · <span id="spinsText">3 סיבובים לאורח</span></div>
-    <div id="noSpins">
-      <p>הסיבובים שלך נגמרו — אבל היא עדיין מחכה לך 👇</p>
-      <a href="#gallery"><button class="btn btn-gold">לכל הבנות</button></a>
+
+    <!-- ======== 3D CAROUSEL ======== -->
+    <section class="carousel-section" id="models">
+      <h2 class="section-title reveal">עוד סיבוב ביניהן?</h2>
+      <p class="section-sub reveal">גרור, סובב, בחר.</p>
+      <div class="reveal">
+        <div class="scene">
+          <div class="ring" id="ring"></div>
+        </div>
+        <div class="carousel-nav">
+          <button class="btn nav-btn" id="nextBtn">‹</button>
+          <button class="btn nav-btn" id="prevBtn">›</button>
+        </div>
+        <div class="carousel-hint">
+          אפשר גם לגרור את הקלפים עם האצבע או העכבר
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== BLOG / MAGAZINE ======== -->
+    <section id="blog">
+      <h2 class="section-title reveal">המגזין לגברים</h2>
+      <p class="section-sub reveal">
+        כי לזכות בה בגלגל זה החלק הקל. עכשיו תלמד מה לעשות עם זה.
+      </p>
+      <div class="blog-grid reveal" id="blogGrid"></div>
+    </section>
+
+    <div id="blogModal">
+      <div class="blog-article">
+        <button class="btn close-x" id="blogClose">✕</button>
+        <div id="blogContent"></div>
+        <div class="article-cta">
+          <p>מספיק תיאוריה. יש 9 בנות שמחכות שתכתוב להן.</p>
+          <a class="btn btn-primary" href="#wheel" id="blogCtaBtn"
+            >סובב את הגלגל 🎡</a
+          >
+        </div>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- ======== MATCH MODAL ======== -->
-<div id="matchModal">
-  <div class="match-card">
-    <div class="match-avatar" id="matchAvatar">?</div>
-    <div class="match-body">
-      <span class="match-label">✦ זכית בה ✦</span>
-      <h3 id="matchName"></h3>
-      <p id="matchTag"></p>
-      <a class="btn btn-primary" id="matchLink" href="#" target="_blank" rel="noopener">התחל לדבר איתה עכשיו →</a>
-      <button class="again" id="spinAgain">או... נסה את מזלך שוב</button>
+    <!-- ======== STICKY CTA ======== -->
+    <div id="stickyCta">
+      <span id="stickyText">עוד לא סובבת את הגלגל 🎡</span>
+      <a class="btn btn-primary" id="stickyBtn" href="#wheel">לגלגל</a>
     </div>
-  </div>
-</div>
 
-<!-- ======== 3D CAROUSEL ======== -->
-<section class="carousel-section" id="models">
-  <h2 class="section-title reveal">עוד סיבוב ביניהן?</h2>
-  <p class="section-sub reveal">גרור, סובב, בחר.</p>
-  <div class="reveal">
-    <div class="scene">
-      <div class="ring" id="ring"></div>
-    </div>
-    <div class="carousel-nav">
-      <button class="btn nav-btn" id="nextBtn">‹</button>
-      <button class="btn nav-btn" id="prevBtn">›</button>
-    </div>
-    <div class="carousel-hint">אפשר גם לגרור את הקלפים עם האצבע או העכבר</div>
-  </div>
-</section>
+    <footer>
+      <div class="logo">V E L V E T</div>
+      תוכן למבוגרים בלבד · 18+<br />
+      כל הקישורים מובילים לעמודים רשמיים של היוצרות
+    </footer>
 
-<!-- ======== BLOG / MAGAZINE ======== -->
-<section id="blog">
-  <h2 class="section-title reveal">המגזין לגברים</h2>
-  <p class="section-sub reveal">כי לזכות בה בגלגל זה החלק הקל. עכשיו תלמד מה לעשות עם זה.</p>
-  <div class="blog-grid reveal" id="blogGrid"></div>
-</section>
-
-<div id="blogModal">
-  <div class="blog-article">
-    <button class="btn close-x" id="blogClose">✕</button>
-    <div id="blogContent"></div>
-    <div class="article-cta">
-      <p>מספיק תיאוריה. יש 9 בנות שמחכות שתכתוב להן.</p>
-      <a class="btn btn-primary" href="#wheel" id="blogCtaBtn">סובב את הגלגל 🎡</a>
-    </div>
-  </div>
-</div>
-
-<!-- ======== STICKY CTA ======== -->
-<div id="stickyCta">
-  <span id="stickyText">עוד לא סובבת את הגלגל 🎡</span>
-  <a class="btn btn-primary" id="stickyBtn" href="#wheel">לגלגל</a>
-</div>
-
-<footer>
-  <div class="logo">V E L V E T</div>
-  תוכן למבוגרים בלבד · 18+<br>
-  כל הקישורים מובילים לעמודים רשמיים של היוצרות
-</footer>
-
-<script>
-/* ================================================================
+    <script>
+      /* ================================================================
    נתוני הבנות — ערכו כאן בלבד.
    name: שם | tagline: משפט פיתוי | initial: אות לגיבוי אם התמונה לא נטענת
    img: כתובת תמונה (כרגע פלייסהולדר מאויר — החליפו בתמונות אמיתיות!)
    gradient: רקע גיבוי | link: קישור OnlyFans | online: עדכנו לפי המצב האמיתי
    MAX_SPINS: מספר סיבובים מקסימלי למשתמש (כרגע 3)
 ================================================================ */
-const MAX_SPINS = 3;
-const AV = seed => `https://api.dicebear.com/9.x/lorelei/png?size=400&seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,ffd5dc,ffdfbf`;
+      const MAX_SPINS = 3;
+      const AV = (seed) =>
+        `https://api.dicebear.com/9.x/lorelei/png?size=400&seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,ffd5dc,ffdfbf`;
 
-/* HERO_IMG: כשתהיה לכם תמונה קבוצתית אמיתית — שימו כאן את הכתובת שלה
+      /* HERO_IMG: כשתהיה לכם תמונה קבוצתית אמיתית — שימו כאן את הכתובת שלה
    וה"קולאז'" יוחלף אוטומטית בתמונה אחת גדולה. */
-const HERO_IMG = null; // למשל: "images/hero-group.jpg"
+      const HERO_IMG = null; // למשל: "images/hero-group.jpg"
 
-/* img: תמונת פרופיל (על הגלגל ובגלריה)
+      /* img: תמונת פרופיל (על הגלגל ובגלריה)
    imgWin: תמונת "זכייה" — מזמינה יותר, נחשפת רק במסך הזכייה */
-const MODELS = [
-  {name:"אדל דהן",     tagline:"החיוך שיגרום לך לשכוח איך קוראים לך",   initial:"א", gradient:["#ff2e88","#7a1fa2"], img:"images/adel.jpg", imgWin:"images/adel.jpg", link:"https://onlyfans.com/PLACEHOLDER1", online:true},
-  {name:"זאיה",        tagline:"מתוקה בצ'אט. פחות מתוקה כשנשארים לבד",  initial:"ז", gradient:["#a855f7","#312e81"], img:AV('zaya'),   imgWin:AV('zaya-win'),   link:"https://onlyfans.com/PLACEHOLDER2", online:true},
-  {name:"קארן",        tagline:"עונה לכל הודעה. תבדוק אותה",             initial:"ק", gradient:["#f43f5e","#831843"], img:"images/karen.jpg", imgWin:"images/karen.jpg", link:"https://onlyfans.com/PLACEHOLDER3", online:false},
-  {name:"תרצה",        tagline:"הצד השובב שלה שמור למי שנכנס",           initial:"ת", gradient:["#f59e0b","#b91c1c"], img:AV('tirza'),  imgWin:AV('tirza-win'),  link:"https://onlyfans.com/PLACEHOLDER4", online:true},
-  {name:"מריאל",       tagline:"אומרים שהיא ממכרת. הוזהרת",              initial:"מ", gradient:["#06b6d4","#4c1d95"], img:AV('mariel'), imgWin:AV('mariel-win'), link:"https://onlyfans.com/PLACEHOLDER5", online:true},
-  {name:"נטלי",        tagline:"שקטה בהתחלה. רק בהתחלה",                 initial:"נ", gradient:["#ec4899","#1e1b4b"], img:AV('natali'), imgWin:AV('natali-win'), link:"https://onlyfans.com/PLACEHOLDER6", online:false},
-  {name:"תמר אמונה",   tagline:"הפרופיל שכולם חוזרים אליו",               initial:"ת", gradient:["#8b5cf6","#701a75"], img:"images/tamar.jpg", imgWin:"images/tamar.jpg", link:"https://onlyfans.com/PLACEHOLDER7", online:true},
-  {name:"מילאן",       tagline:"תשאל אותה משהו. היא תפתיע אותך",          initial:"מ", gradient:["#ff2e88","#0f172a"], img:AV('milan'),  imgWin:AV('milan-win'),  link:"https://onlyfans.com/PLACEHOLDER8", online:true},
-  {name:"בר סימן טוב", tagline:"היא כבר יודעת שתכתוב לה",                 initial:"ב", gradient:["#f5c542","#9a3412"], img:AV('bar'),    imgWin:AV('bar-win'),    link:"https://onlyfans.com/PLACEHOLDER9", online:true},
-];
+      const MODELS = [
+        {
+          name: "אדל דהן",
+          tagline: "החיוך שיגרום לך לשכוח איך קוראים לך",
+          initial: "א",
+          gradient: ["#ff2e88", "#7a1fa2"],
+          img: "images/adel.jpg",
+          imgWin: "images/adel.jpg",
+          link: "https://onlyfans.com/PLACEHOLDER1",
+          online: true,
+        },
+        {
+          name: "זאיה",
+          tagline: "מתוקה בצ'אט. פחות מתוקה כשנשארים לבד",
+          initial: "ז",
+          gradient: ["#a855f7", "#312e81"],
+          img: AV("zaya"),
+          imgWin: AV("zaya-win"),
+          link: "https://onlyfans.com/PLACEHOLDER2",
+          online: true,
+        },
+        {
+          name: "קארן",
+          tagline: "עונה לכל הודעה. תבדוק אותה",
+          initial: "ק",
+          gradient: ["#f43f5e", "#831843"],
+          img: "images/karen.jpg",
+          imgWin: "images/karen.jpg",
+          link: "https://onlyfans.com/PLACEHOLDER3",
+          online: false,
+        },
+        {
+          name: "תרצה",
+          tagline: "הצד השובב שלה שמור למי שנכנס",
+          initial: "ת",
+          gradient: ["#f59e0b", "#b91c1c"],
+          img: AV("tirza"),
+          imgWin: AV("tirza-win"),
+          link: "https://onlyfans.com/PLACEHOLDER4",
+          online: true,
+        },
+        {
+          name: "מריאל",
+          tagline: "אומרים שהיא ממכרת. הוזהרת",
+          initial: "מ",
+          gradient: ["#06b6d4", "#4c1d95"],
+          img: AV("mariel"),
+          imgWin: AV("mariel-win"),
+          link: "https://onlyfans.com/PLACEHOLDER5",
+          online: true,
+        },
+        {
+          name: "נטלי",
+          tagline: "שקטה בהתחלה. רק בהתחלה",
+          initial: "נ",
+          gradient: ["#ec4899", "#1e1b4b"],
+          img: AV("natali"),
+          imgWin: AV("natali-win"),
+          link: "https://onlyfans.com/PLACEHOLDER6",
+          online: false,
+        },
+        {
+          name: "תמר אמונה",
+          tagline: "הפרופיל שכולם חוזרים אליו",
+          initial: "ת",
+          gradient: ["#8b5cf6", "#701a75"],
+          img: "images/tamar.jpg",
+          imgWin: "images/tamar.jpg",
+          link: "https://onlyfans.com/PLACEHOLDER7",
+          online: true,
+        },
+        {
+          name: "מילאן",
+          tagline: "תשאל אותה משהו. היא תפתיע אותך",
+          initial: "מ",
+          gradient: ["#ff2e88", "#0f172a"],
+          img: AV("milan"),
+          imgWin: AV("milan-win"),
+          link: "https://onlyfans.com/PLACEHOLDER8",
+          online: true,
+        },
+        {
+          name: "בר סימן טוב",
+          tagline: "היא כבר יודעת שתכתוב לה",
+          initial: "ב",
+          gradient: ["#f5c542", "#9a3412"],
+          img: AV("bar"),
+          imgWin: AV("bar-win"),
+          link: "https://onlyfans.com/PLACEHOLDER9",
+          online: true,
+        },
+      ];
 
-/* ---------- hero visual (קולאז' או תמונה קבוצתית) ---------- */
-const hv = document.getElementById('heroVisual');
-if(HERO_IMG){
-  hv.innerHTML = `<img class="hero-img" src="${HERO_IMG}" alt="הבנות של VELVET">`;
-}else{
-  hv.innerHTML = `<div class="hero-collage">` + MODELS.map(m=>
-    `<a href="#gallery" title="${m.name}"><img src="${m.img}" alt="${m.name}" loading="eager"></a>`
-  ).join('') + `</div>`;
-}
+      /* ---------- hero visual (קולאז' או תמונה קבוצתית) ---------- */
+      const hv = document.getElementById("heroVisual");
+      if (HERO_IMG) {
+        hv.innerHTML = `<img class="hero-img" src="${HERO_IMG}" alt="הבנות של VELVET">`;
+      } else {
+        hv.innerHTML =
+          `<div class="hero-collage">` +
+          MODELS.map(
+            (m) =>
+              `<a href="#gallery" title="${m.name}"><img src="${m.img}" alt="${m.name}" loading="eager"></a>`,
+          ).join("") +
+          `</div>`;
+      }
 
-/* ---------- particles ---------- */
-const pc = document.getElementById('particles'), px = pc.getContext('2d');
-let parts = [];
-function sizeParticles(){ pc.width = innerWidth; pc.height = innerHeight; }
-sizeParticles(); addEventListener('resize', sizeParticles);
-for(let i=0;i<45;i++) parts.push({
-  x:Math.random()*innerWidth, y:Math.random()*innerHeight,
-  r:Math.random()*2.2+.6, s:Math.random()*.35+.08,
-  c:Math.random()<.5?'255,46,136':'168,85,247', a:Math.random()*.5+.15
-});
-(function drawParts(){
-  px.clearRect(0,0,pc.width,pc.height);
-  for(const p of parts){
-    p.y -= p.s; if(p.y < -10){ p.y = pc.height+10; p.x = Math.random()*pc.width; }
-    px.beginPath(); px.arc(p.x,p.y,p.r,0,7);
-    px.fillStyle = `rgba(${p.c},${p.a})`; px.fill();
-  }
-  requestAnimationFrame(drawParts);
-})();
+      /* ---------- particles ---------- */
+      const pc = document.getElementById("particles"),
+        px = pc.getContext("2d");
+      let parts = [];
+      function sizeParticles() {
+        pc.width = innerWidth;
+        pc.height = innerHeight;
+      }
+      sizeParticles();
+      addEventListener("resize", sizeParticles);
+      for (let i = 0; i < 45; i++)
+        parts.push({
+          x: Math.random() * innerWidth,
+          y: Math.random() * innerHeight,
+          r: Math.random() * 2.2 + 0.6,
+          s: Math.random() * 0.35 + 0.08,
+          c: Math.random() < 0.5 ? "255,46,136" : "168,85,247",
+          a: Math.random() * 0.5 + 0.15,
+        });
+      (function drawParts() {
+        px.clearRect(0, 0, pc.width, pc.height);
+        for (const p of parts) {
+          p.y -= p.s;
+          if (p.y < -10) {
+            p.y = pc.height + 10;
+            p.x = Math.random() * pc.width;
+          }
+          px.beginPath();
+          px.arc(p.x, p.y, p.r, 0, 7);
+          px.fillStyle = `rgba(${p.c},${p.a})`;
+          px.fill();
+        }
+        requestAnimationFrame(drawParts);
+      })();
 
-/* ---------- age gate ---------- */
-document.getElementById('gateYes').addEventListener('click',()=>{
-  document.getElementById('ageGate').classList.add('hidden');
-});
+      /* ---------- age gate ---------- */
+      document.getElementById("gateYes").addEventListener("click", () => {
+        document.getElementById("ageGate").classList.add("hidden");
+      });
 
-/* ---------- scroll reveal ---------- */
-const io = new IntersectionObserver(es=>es.forEach(e=>{
-  if(e.isIntersecting) e.target.classList.add('visible');
-}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+      /* ---------- scroll reveal ---------- */
+      const io = new IntersectionObserver(
+        (es) =>
+          es.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("visible");
+          }),
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
-/* ---------- gallery grid ---------- */
-const grid = document.getElementById('galleryGrid');
-MODELS.forEach((m,i)=>{
-  const el = document.createElement('div');
-  el.className = 'gcard';
-  el.innerHTML = `
-    ${m.online?'<div class="online"><i></i>אונליין עכשיו</div>':''}
+      /* ---------- gallery grid ---------- */
+      const grid = document.getElementById("galleryGrid");
+      MODELS.forEach((m, i) => {
+        const el = document.createElement("div");
+        el.className = "gcard";
+        el.innerHTML = `
+    ${m.online ? '<div class="online"><i></i>אונליין עכשיו</div>' : ""}
     <div class="gph" style="background-image:linear-gradient(135deg,${m.gradient[0]},${m.gradient[1]})">
-      ${m.img?`<img src="${m.img}" alt="${m.name}" loading="lazy" onerror="this.remove()">`:m.initial}
+      ${m.img ? `<img src="${m.img}" alt="${m.name}" loading="lazy" onerror="this.remove()">` : m.initial}
     </div>
     <div class="gbody">
       <h4>${m.name}</h4>
@@ -563,244 +709,357 @@ MODELS.forEach((m,i)=>{
         <a class="btn btn-primary" href="${m.link}" target="_blank" rel="noopener">לפרופיל שלה</a>
       </div>
     </div>`;
-  grid.appendChild(el);
-});
+        grid.appendChild(el);
+      });
 
-/* ---------- spins state (נשמר בדפדפן) ---------- */
-function getSpins(){ try{ return parseInt(localStorage.getItem('velvet_spins')||'0'); }catch(e){ return window.__s||0; } }
-function setSpins(v){ try{ localStorage.setItem('velvet_spins', v); }catch(e){ window.__s=v; } }
+      /* ---------- spins state (נשמר בדפדפן) ---------- */
+      function getSpins() {
+        try {
+          return parseInt(localStorage.getItem("velvet_spins") || "0");
+        } catch (e) {
+          return window.__s || 0;
+        }
+      }
+      function setSpins(v) {
+        try {
+          localStorage.setItem("velvet_spins", v);
+        } catch (e) {
+          window.__s = v;
+        }
+      }
 
-const spinBtn = document.getElementById('spinBtn');
-const spinsDots = document.getElementById('spinsDots');
-const spinsText = document.getElementById('spinsText');
-const noSpins = document.getElementById('noSpins');
-const spinAgainBtn = document.getElementById('spinAgain');
+      const spinBtn = document.getElementById("spinBtn");
+      const spinsDots = document.getElementById("spinsDots");
+      const spinsText = document.getElementById("spinsText");
+      const noSpins = document.getElementById("noSpins");
+      const spinAgainBtn = document.getElementById("spinAgain");
 
-function renderSpins(){
-  const used = getSpins(), left = MAX_SPINS - used;
-  spinsDots.innerHTML = '';
-  for(let i=0;i<MAX_SPINS;i++){
-    const d = document.createElement('div');
-    d.className = 'dot'+(i<used?' used':'');
-    spinsDots.appendChild(d);
-  }
-  if(left <= 0){
-    spinBtn.disabled = true;
-    spinBtn.textContent = 'הסיבובים נגמרו';
-    spinsText.textContent = 'ניצלת את כל הסיבובים';
-    noSpins.style.display = 'block';
-    spinAgainBtn.classList.add('hide');
-  }else{
-    spinsText.textContent = left === MAX_SPINS ? `${MAX_SPINS} סיבובים לאורח` : `נשארו לך ${left===1?'סיבוב אחרון!':left+' סיבובים'}`;
-  }
-}
-renderSpins();
-
-/* ---------- wheel (עם תמונות + שמות) ---------- */
-const wc = document.getElementById('wheelCanvas'), wx = wc.getContext('2d');
-const N = MODELS.length, SEG = 2*Math.PI/N;
-const CX = 480, R = 466;
-let wheelAngle = 0;
-const wheelImgs = [];
-
-MODELS.forEach((m,i)=>{
-  if(!m.img) return;
-  const im = new Image();
-  if(/^https?:/.test(m.img)) im.crossOrigin = 'anonymous'; // רק לתמונות חיצוניות
-  im.onload = ()=>{ wheelImgs[i] = im; drawWheel(wheelAngle); };
-  im.src = m.img;
-});
-
-function drawWheel(angle){
-  wx.clearRect(0,0,960,960);
-  wx.save(); wx.translate(CX,CX); wx.rotate(angle);
-  for(let i=0;i<N;i++){
-    const g = wx.createLinearGradient(-R,0,R,0);
-    g.addColorStop(0, MODELS[i].gradient[0]); g.addColorStop(1, MODELS[i].gradient[1]);
-    wx.beginPath(); wx.moveTo(0,0);
-    wx.arc(0,0,R, i*SEG - Math.PI/2, (i+1)*SEG - Math.PI/2);
-    wx.closePath(); wx.fillStyle = g; wx.fill();
-    wx.strokeStyle = 'rgba(10,7,20,.9)'; wx.lineWidth = 6; wx.stroke();
-
-    wx.save();
-    wx.rotate(i*SEG + SEG/2 - Math.PI/2); // bisector points along +x
-
-    // avatar circle
-    const ar = 62, ax = R*.56;
-    wx.save();
-    wx.translate(ax,0); wx.rotate(Math.PI/2);
-    wx.beginPath(); wx.arc(0,0,ar,0,7); wx.closePath();
-    wx.fillStyle = 'rgba(255,255,255,.18)'; wx.fill();
-    wx.save(); wx.clip();
-    if(wheelImgs[i]) wx.drawImage(wheelImgs[i], -ar, -ar, ar*2, ar*2);
-    else{
-      wx.fillStyle = 'rgba(255,255,255,.85)';
-      wx.font = '900 56px Heebo, sans-serif';
-      wx.textAlign='center'; wx.textBaseline='middle';
-      wx.fillText(MODELS[i].initial, 0, 4);
-    }
-    wx.restore();
-    wx.beginPath(); wx.arc(0,0,ar,0,7);
-    wx.strokeStyle = 'rgba(255,255,255,.85)'; wx.lineWidth = 4; wx.stroke();
-    wx.restore();
-
-    // name
-    wx.save();
-    wx.translate(R*.85, 0); wx.rotate(Math.PI/2);
-    wx.fillStyle = '#fff';
-    const long = MODELS[i].name.length > 6;
-    wx.font = `900 ${long?30:38}px Heebo, sans-serif`;
-    wx.textAlign = 'center'; wx.textBaseline = 'middle';
-    wx.shadowColor = 'rgba(0,0,0,.65)'; wx.shadowBlur = 10;
-    wx.fillText(MODELS[i].name, 0, 0);
-    wx.restore();
-
-    wx.restore();
-  }
-  wx.restore();
-}
-drawWheel(0);
-
-let spinning = false;
-let audioCtx = null;
-function tick(){
-  try{
-    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
-    const o = audioCtx.createOscillator(), gn = audioCtx.createGain();
-    o.frequency.value = 900; gn.gain.setValueAtTime(.08, audioCtx.currentTime);
-    gn.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime+.05);
-    o.connect(gn); gn.connect(audioCtx.destination);
-    o.start(); o.stop(audioCtx.currentTime+.05);
-  }catch(e){}
-}
-
-spinBtn.addEventListener('click', ()=>{
-  if(spinning || getSpins() >= MAX_SPINS) return;
-  spinning = true; spinBtn.disabled = true;
-  setSpins(getSpins()+1);
-
-  const winner = Math.floor(Math.random()*N);
-  // pointer at top (-90deg): segment i's center lands at top when A ≡ -(i*SEG+SEG/2) (mod 2π)
-  const TWO_PI = Math.PI*2;
-  const desired = ((-(winner*SEG + SEG/2)) % TWO_PI + TWO_PI) % TWO_PI;
-  const start = wheelAngle;
-  const startMod = ((start % TWO_PI) + TWO_PI) % TWO_PI;
-  const finalAngle = start + TWO_PI*6 + ((desired - startMod) + TWO_PI) % TWO_PI;
-
-  const dur = 5200, t0 = performance.now();
-  let lastSeg = -1;
-  (function anim(t){
-    const k = Math.min((t-t0)/dur, 1);
-    const ease = 1 - Math.pow(1-k, 4);
-    wheelAngle = start + (finalAngle-start)*ease;
-    drawWheel(wheelAngle);
-    const segNow = Math.floor(((wheelAngle%TWO_PI)+TWO_PI)/SEG);
-    if(segNow !== lastSeg){ lastSeg = segNow; tick(); }
-    if(k < 1) requestAnimationFrame(anim);
-    else{
-      spinning = false;
-      spinBtn.disabled = getSpins() >= MAX_SPINS;
-      if(!spinBtn.disabled) spinBtn.textContent = 'סובב שוב';
+      function renderSpins() {
+        const used = getSpins(),
+          left = MAX_SPINS - used;
+        spinsDots.innerHTML = "";
+        for (let i = 0; i < MAX_SPINS; i++) {
+          const d = document.createElement("div");
+          d.className = "dot" + (i < used ? " used" : "");
+          spinsDots.appendChild(d);
+        }
+        if (left <= 0) {
+          spinBtn.disabled = true;
+          spinBtn.textContent = "הסיבובים נגמרו";
+          spinsText.textContent = "ניצלת את כל הסיבובים";
+          noSpins.style.display = "block";
+          spinAgainBtn.classList.add("hide");
+        } else {
+          spinsText.textContent =
+            left === MAX_SPINS
+              ? `${MAX_SPINS} סיבובים לאורח`
+              : `נשארו לך ${left === 1 ? "סיבוב אחרון!" : left + " סיבובים"}`;
+        }
+      }
       renderSpins();
-      showMatch(winner); confetti();
-    }
-  })(t0);
-});
 
-/* ---------- match modal ---------- */
-const modal = document.getElementById('matchModal');
-function showMatch(i){
-  const m = MODELS[i];
-  const av = document.getElementById('matchAvatar');
-  const winPic = m.imgWin || m.img; // תמונת הזכייה — שונה ומזמינה יותר מתמונת הפרופיל
-  if(winPic){ av.textContent=''; av.style.background = `url('${winPic}') center top/cover, linear-gradient(135deg, ${m.gradient[0]}, ${m.gradient[1]})`; }
-  else{ av.textContent = m.initial; av.style.background = `linear-gradient(135deg, ${m.gradient[0]}, ${m.gradient[1]})`; }
-  document.getElementById('matchName').textContent = m.name;
-  document.getElementById('matchTag').textContent = m.tagline;
-  document.getElementById('matchLink').href = m.link;
-  modal.classList.add('show');
-  document.getElementById('stickyText').textContent = `זכית ב${m.name} 💜`;
-  const sb = document.getElementById('stickyBtn');
-  sb.textContent = 'לפרופיל שלה'; sb.href = m.link; sb.target = '_blank';
-}
-spinAgainBtn.addEventListener('click', ()=>{
-  modal.classList.remove('show');
-  document.getElementById('wheel').scrollIntoView({behavior:'smooth'});
-});
-modal.addEventListener('click', e=>{ if(e.target===modal) modal.classList.remove('show'); });
+      /* ---------- wheel (עם תמונות + שמות) ---------- */
+      const wc = document.getElementById("wheelCanvas"),
+        wx = wc.getContext("2d");
+      const N = MODELS.length,
+        SEG = (2 * Math.PI) / N;
+      const CX = 480,
+        R = 466;
+      let wheelAngle = 0;
+      const wheelImgs = [];
 
-/* ---------- confetti ---------- */
-function confetti(){
-  const colors = ['#ff2e88','#a855f7','#f5c542','#4ade80','#06b6d4'];
-  for(let i=0;i<70;i++){
-    const c = document.createElement('div');
-    c.className = 'confetti';
-    c.style.background = colors[i%colors.length];
-    c.style.left = Math.random()*100+'vw';
-    const dur = 2.2+Math.random()*1.8, rot = Math.random()*720-360;
-    c.animate([
-      {transform:`translateY(0) rotate(0deg)`, opacity:1},
-      {transform:`translateY(105vh) rotate(${rot}deg)`, opacity:.7}
-    ], {duration:dur*1000, easing:'cubic-bezier(.2,.6,.6,1)'});
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(), dur*1000);
-  }
-}
+      MODELS.forEach((m, i) => {
+        if (!m.img) return;
+        const im = new Image();
+        if (/^https?:/.test(m.img)) im.crossOrigin = "anonymous"; // רק לתמונות חיצוניות
+        im.onload = () => {
+          wheelImgs[i] = im;
+          drawWheel(wheelAngle);
+        };
+        im.src = m.img;
+      });
 
-/* ---------- 3D carousel ---------- */
-const ring = document.getElementById('ring');
-const radius = Math.round((280/2) / Math.tan(Math.PI/N)) + 60;
-MODELS.forEach((m,i)=>{
-  const card = document.createElement('div');
-  card.className = 'card3d';
-  card.style.transform = `rotateY(${i*(360/N)}deg) translateZ(${radius}px)`;
-  card.innerHTML = `
-    ${m.online?'<div class="online"><i></i>אונליין עכשיו</div>':''}
-    <div class="ph" style="background-image:${m.img?`url('${m.img}'),`:''}linear-gradient(135deg,${m.gradient[0]},${m.gradient[1]})">${m.img?'':m.initial}</div>
+      function drawWheel(angle) {
+        wx.clearRect(0, 0, 960, 960);
+        wx.save();
+        wx.translate(CX, CX);
+        wx.rotate(angle);
+        for (let i = 0; i < N; i++) {
+          const g = wx.createLinearGradient(-R, 0, R, 0);
+          g.addColorStop(0, MODELS[i].gradient[0]);
+          g.addColorStop(1, MODELS[i].gradient[1]);
+          wx.beginPath();
+          wx.moveTo(0, 0);
+          wx.arc(0, 0, R, i * SEG - Math.PI / 2, (i + 1) * SEG - Math.PI / 2);
+          wx.closePath();
+          wx.fillStyle = g;
+          wx.fill();
+          wx.strokeStyle = "rgba(10,7,20,.9)";
+          wx.lineWidth = 6;
+          wx.stroke();
+
+          wx.save();
+          wx.rotate(i * SEG + SEG / 2 - Math.PI / 2); // bisector points along +x
+
+          // avatar circle
+          const ar = 62,
+            ax = R * 0.56;
+          wx.save();
+          wx.translate(ax, 0);
+          wx.rotate(Math.PI / 2);
+          wx.beginPath();
+          wx.arc(0, 0, ar, 0, 7);
+          wx.closePath();
+          wx.fillStyle = "rgba(255,255,255,.18)";
+          wx.fill();
+          wx.save();
+          wx.clip();
+          if (wheelImgs[i])
+            wx.drawImage(wheelImgs[i], -ar, -ar, ar * 2, ar * 2);
+          else {
+            wx.fillStyle = "rgba(255,255,255,.85)";
+            wx.font = "900 56px Heebo, sans-serif";
+            wx.textAlign = "center";
+            wx.textBaseline = "middle";
+            wx.fillText(MODELS[i].initial, 0, 4);
+          }
+          wx.restore();
+          wx.beginPath();
+          wx.arc(0, 0, ar, 0, 7);
+          wx.strokeStyle = "rgba(255,255,255,.85)";
+          wx.lineWidth = 4;
+          wx.stroke();
+          wx.restore();
+
+          // name
+          wx.save();
+          wx.translate(R * 0.85, 0);
+          wx.rotate(Math.PI / 2);
+          wx.fillStyle = "#fff";
+          const long = MODELS[i].name.length > 6;
+          wx.font = `900 ${long ? 30 : 38}px Heebo, sans-serif`;
+          wx.textAlign = "center";
+          wx.textBaseline = "middle";
+          wx.shadowColor = "rgba(0,0,0,.65)";
+          wx.shadowBlur = 10;
+          wx.fillText(MODELS[i].name, 0, 0);
+          wx.restore();
+
+          wx.restore();
+        }
+        wx.restore();
+      }
+      drawWheel(0);
+
+      let spinning = false;
+      let audioCtx = null;
+      function tick() {
+        try {
+          audioCtx =
+            audioCtx ||
+            new (window.AudioContext || window.webkitAudioContext)();
+          const o = audioCtx.createOscillator(),
+            gn = audioCtx.createGain();
+          o.frequency.value = 900;
+          gn.gain.setValueAtTime(0.08, audioCtx.currentTime);
+          gn.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioCtx.currentTime + 0.05,
+          );
+          o.connect(gn);
+          gn.connect(audioCtx.destination);
+          o.start();
+          o.stop(audioCtx.currentTime + 0.05);
+        } catch (e) {}
+      }
+
+      spinBtn.addEventListener("click", () => {
+        if (spinning || getSpins() >= MAX_SPINS) return;
+        spinning = true;
+        spinBtn.disabled = true;
+        setSpins(getSpins() + 1);
+
+        const winner = Math.floor(Math.random() * N);
+        // pointer at top (-90deg): segment i's center lands at top when A ≡ -(i*SEG+SEG/2) (mod 2π)
+        const TWO_PI = Math.PI * 2;
+        const desired =
+          ((-(winner * SEG + SEG / 2) % TWO_PI) + TWO_PI) % TWO_PI;
+        const start = wheelAngle;
+        const startMod = ((start % TWO_PI) + TWO_PI) % TWO_PI;
+        const finalAngle =
+          start + TWO_PI * 6 + ((desired - startMod + TWO_PI) % TWO_PI);
+
+        const dur = 5200,
+          t0 = performance.now();
+        let lastSeg = -1;
+        (function anim(t) {
+          const k = Math.min((t - t0) / dur, 1);
+          const ease = 1 - Math.pow(1 - k, 4);
+          wheelAngle = start + (finalAngle - start) * ease;
+          drawWheel(wheelAngle);
+          const segNow = Math.floor(((wheelAngle % TWO_PI) + TWO_PI) / SEG);
+          if (segNow !== lastSeg) {
+            lastSeg = segNow;
+            tick();
+          }
+          if (k < 1) requestAnimationFrame(anim);
+          else {
+            spinning = false;
+            spinBtn.disabled = getSpins() >= MAX_SPINS;
+            if (!spinBtn.disabled) spinBtn.textContent = "סובב שוב";
+            renderSpins();
+            showMatch(winner);
+            confetti();
+          }
+        })(t0);
+      });
+
+      /* ---------- match modal ---------- */
+      const modal = document.getElementById("matchModal");
+      function showMatch(i) {
+        const m = MODELS[i];
+        const av = document.getElementById("matchAvatar");
+        const winPic = m.imgWin || m.img; // תמונת הזכייה — שונה ומזמינה יותר מתמונת הפרופיל
+        if (winPic) {
+          av.textContent = "";
+          av.style.background = `url('${winPic}') center top/cover, linear-gradient(135deg, ${m.gradient[0]}, ${m.gradient[1]})`;
+        } else {
+          av.textContent = m.initial;
+          av.style.background = `linear-gradient(135deg, ${m.gradient[0]}, ${m.gradient[1]})`;
+        }
+        document.getElementById("matchName").textContent = m.name;
+        document.getElementById("matchTag").textContent = m.tagline;
+        document.getElementById("matchLink").href = m.link;
+        modal.classList.add("show");
+        document.getElementById("stickyText").textContent =
+          `זכית ב${m.name} 💜`;
+        const sb = document.getElementById("stickyBtn");
+        sb.textContent = "לפרופיל שלה";
+        sb.href = m.link;
+        sb.target = "_blank";
+      }
+      spinAgainBtn.addEventListener("click", () => {
+        modal.classList.remove("show");
+        document.getElementById("wheel").scrollIntoView({ behavior: "smooth" });
+      });
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.classList.remove("show");
+      });
+
+      /* ---------- confetti ---------- */
+      function confetti() {
+        const colors = ["#ff2e88", "#a855f7", "#f5c542", "#4ade80", "#06b6d4"];
+        for (let i = 0; i < 70; i++) {
+          const c = document.createElement("div");
+          c.className = "confetti";
+          c.style.background = colors[i % colors.length];
+          c.style.left = Math.random() * 100 + "vw";
+          const dur = 2.2 + Math.random() * 1.8,
+            rot = Math.random() * 720 - 360;
+          c.animate(
+            [
+              { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
+              {
+                transform: `translateY(105vh) rotate(${rot}deg)`,
+                opacity: 0.7,
+              },
+            ],
+            { duration: dur * 1000, easing: "cubic-bezier(.2,.6,.6,1)" },
+          );
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), dur * 1000);
+        }
+      }
+
+      /* ---------- 3D carousel ---------- */
+      const ring = document.getElementById("ring");
+      const radius = Math.round(280 / 2 / Math.tan(Math.PI / N)) + 60;
+      MODELS.forEach((m, i) => {
+        const card = document.createElement("div");
+        card.className = "card3d";
+        card.style.transform = `rotateY(${i * (360 / N)}deg) translateZ(${radius}px)`;
+        card.innerHTML = `
+    ${m.online ? '<div class="online"><i></i>אונליין עכשיו</div>' : ""}
+    <div class="ph" style="background-image:${m.img ? `url('${m.img}'),` : ""}linear-gradient(135deg,${m.gradient[0]},${m.gradient[1]})">${m.img ? "" : m.initial}</div>
     <div class="card-info">
       <h4>${m.name}</h4>
       <div class="tag">${m.tagline}</div>
       <a class="btn btn-primary" href="${m.link}" target="_blank" rel="noopener">לצ'אט איתה →</a>
     </div>`;
-  ring.appendChild(card);
-});
-let ringAngle = 0;
-function setRing(){ ring.style.transform = `rotateY(${ringAngle}deg)`; }
-document.getElementById('nextBtn').addEventListener('click', ()=>{ ringAngle -= 360/N; setRing(); });
-document.getElementById('prevBtn').addEventListener('click', ()=>{ ringAngle += 360/N; setRing(); });
+        ring.appendChild(card);
+      });
+      let ringAngle = 0;
+      function setRing() {
+        ring.style.transform = `rotateY(${ringAngle}deg)`;
+      }
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        ringAngle -= 360 / N;
+        setRing();
+      });
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        ringAngle += 360 / N;
+        setRing();
+      });
 
-/* drag to rotate */
-let dragging = false, dragX = 0, dragStartAngle = 0;
-const scene = document.querySelector('.scene');
-function dStart(x){ dragging = true; dragX = x; dragStartAngle = ringAngle; ring.style.transition = 'none'; }
-function dMove(x){ if(!dragging) return; ringAngle = dragStartAngle + (x-dragX)*.35; setRing(); }
-function dEnd(){
-  if(!dragging) return; dragging = false;
-  ring.style.transition = '';
-  ringAngle = Math.round(ringAngle/(360/N))*(360/N); setRing();
-}
-scene.addEventListener('mousedown', e=>dStart(e.clientX));
-addEventListener('mousemove', e=>dMove(e.clientX));
-addEventListener('mouseup', dEnd);
-scene.addEventListener('touchstart', e=>dStart(e.touches[0].clientX), {passive:true});
-scene.addEventListener('touchmove', e=>dMove(e.touches[0].clientX), {passive:true});
-scene.addEventListener('touchend', dEnd);
+      /* drag to rotate */
+      let dragging = false,
+        dragX = 0,
+        dragStartAngle = 0;
+      const scene = document.querySelector(".scene");
+      function dStart(x) {
+        dragging = true;
+        dragX = x;
+        dragStartAngle = ringAngle;
+        ring.style.transition = "none";
+      }
+      function dMove(x) {
+        if (!dragging) return;
+        ringAngle = dragStartAngle + (x - dragX) * 0.35;
+        setRing();
+      }
+      function dEnd() {
+        if (!dragging) return;
+        dragging = false;
+        ring.style.transition = "";
+        ringAngle = Math.round(ringAngle / (360 / N)) * (360 / N);
+        setRing();
+      }
+      scene.addEventListener("mousedown", (e) => dStart(e.clientX));
+      addEventListener("mousemove", (e) => dMove(e.clientX));
+      addEventListener("mouseup", dEnd);
+      scene.addEventListener(
+        "touchstart",
+        (e) => dStart(e.touches[0].clientX),
+        { passive: true },
+      );
+      scene.addEventListener("touchmove", (e) => dMove(e.touches[0].clientX), {
+        passive: true,
+      });
+      scene.addEventListener("touchend", dEnd);
 
-/* gentle auto-rotate when idle */
-let idleTimer = 0;
-setInterval(()=>{
-  if(dragging || modal.classList.contains('show')) return;
-  idleTimer++;
-  if(idleTimer > 6){ ringAngle -= 360/N; setRing(); idleTimer = 0; }
-}, 1000);
-['mousedown','touchstart','click'].forEach(ev=>addEventListener(ev, ()=>idleTimer=0));
+      /* gentle auto-rotate when idle */
+      let idleTimer = 0;
+      setInterval(() => {
+        if (dragging || modal.classList.contains("show")) return;
+        idleTimer++;
+        if (idleTimer > 6) {
+          ringAngle -= 360 / N;
+          setRing();
+          idleTimer = 0;
+        }
+      }, 1000);
+      ["mousedown", "touchstart", "click"].forEach((ev) =>
+        addEventListener(ev, () => (idleTimer = 0)),
+      );
 
-/* ---------- blog ---------- */
-const ARTICLES = [
-  {
-    icon:"💬", title:"איך להתחיל עם בנות — בלי להרגיש מוזר",
-    excerpt:"הגישה הנכונה, המשפט הראשון, ולמה רוב הגברים נופלים עוד לפני שפתחו את הפה.",
-    body:`
+      /* ---------- blog ---------- */
+      const ARTICLES = [
+        {
+          icon: "💬",
+          title: "איך להתחיל עם בנות — בלי להרגיש מוזר",
+          excerpt:
+            "הגישה הנכונה, המשפט הראשון, ולמה רוב הגברים נופלים עוד לפני שפתחו את הפה.",
+          body: `
       <h3>הבעיה היא לא מה להגיד</h3>
       <p>רוב הגברים בטוחים שחסר להם "משפט פתיחה מנצח". האמת? המשפט הכי פשוט עובד מצוין — אם האנרגיה נכונה. בחורה מרגישה תוך שתי שניות אם אתה רגוע ונינוח או לחוץ ומחושב. תעבוד על הרוגע לפני שאתה עובד על הטקסט.</p>
       <h3>תתחיל מהקשר, לא מהמחמאה</h3>
@@ -808,12 +1067,14 @@ const ARTICLES = [
       <h3>שאלות פתוחות = שיחה חיה</h3>
       <p>שאלות של כן/לא הורגות שיחה. "מה הסיפור של..." או "איך הגעת ל..." פותחות דלת. ואז — תקשיב באמת. הקשבה היא הכישרון הכי נדיר אצל גברים, ולכן הכי מושך.</p>
       <h3>דחייה היא לא אירוע</h3>
-      <p>לפעמים היא לא בעניין. זה בסדר גמור, זה לא אומר עליך כלום. מי שמקבל "לא" בחיוך ובכבוד — משאיר רושם טוב גם כשזה לא הסתדר.</p>`
-  },
-  {
-    icon:"✨", title:"איך להרשים בחורה — 5 דברים שעובדים באמת",
-    excerpt:"לא מכונית ולא שרירים. הדברים הקטנים שגורמים לה לספר עליך לחברות.",
-    body:`
+      <p>לפעמים היא לא בעניין. זה בסדר גמור, זה לא אומר עליך כלום. מי שמקבל "לא" בחיוך ובכבוד — משאיר רושם טוב גם כשזה לא הסתדר.</p>`,
+        },
+        {
+          icon: "✨",
+          title: "איך להרשים בחורה — 5 דברים שעובדים באמת",
+          excerpt:
+            "לא מכונית ולא שרירים. הדברים הקטנים שגורמים לה לספר עליך לחברות.",
+          body: `
       <h3>1. תזכור פרטים</h3>
       <p>היא סיפרה שיש לה מבחן ביום שלישי? תשאל ביום רביעי איך הלך. זה שווה יותר מכל מתנה. זה אומר "הקשבתי לך".</p>
       <h3>2. תהיה מעניין — כי יש לך חיים</h3>
@@ -823,12 +1084,14 @@ const ARTICLES = [
       <h3>4. הומור עצמי</h3>
       <p>מי שיודע לצחוק על עצמו משדר שהוא לא שביר. זו אחת התכונות שנשים מדרגות הכי גבוה — הרבה מעל מראה.</p>
       <h3>5. טיפוח בסיסי</h3>
-      <p>ציפורניים, ריח טוב, בגדים שיושבים עליך נכון. זה לא "מטרוסקסואל", זה כבוד עצמי. והיא שמה לב לזה לפני שאמרת מילה.</p>`
-  },
-  {
-    icon:"🎯", title:"איך להשיג כל בחורה? האמת שאף אחד לא מספר",
-    excerpt:"ספוילר: אין טריק קסם. יש משהו הרבה יותר חזק — והוא עובד על כולן.",
-    body:`
+      <p>ציפורניים, ריח טוב, בגדים שיושבים עליך נכון. זה לא "מטרוסקסואל", זה כבוד עצמי. והיא שמה לב לזה לפני שאמרת מילה.</p>`,
+        },
+        {
+          icon: "🎯",
+          title: "איך להשיג כל בחורה? האמת שאף אחד לא מספר",
+          excerpt:
+            "ספוילר: אין טריק קסם. יש משהו הרבה יותר חזק — והוא עובד על כולן.",
+          body: `
       <h3>אין "כל בחורה" — ויופי שכך</h3>
       <p>מי שמוכר לך שיטה ש"עובדת על כולן" מוכר לך שקר. משיכה היא לא קוד לפריצה. אבל יש חדשות טובות: אפשר להעלות דרמטית את הסיכויים שלך אצל הבחורות שמתאימות לך.</p>
       <h3>תשקיע בגרסה הכי טובה שלך</h3>
@@ -836,12 +1099,13 @@ const ARTICLES = [
       <h3>כמות פוגשת איכות</h3>
       <p>מי שמדבר עם בחורה אחת בחצי שנה שם עליה לחץ של מערכת יחסים שלמה. מי שמכיר אנשים חדשים באופן קבוע — רגוע, ורוגע זה מגנט.</p>
       <h3>הסוד האמיתי: לא להיות תלוי בתוצאה</h3>
-      <p>כשאתה נהנה מהשיחה עצמה בלי "לצוד" משהו, הכול משתנה. היא מרגישה את זה. פרדוקסלית, ברגע שהפסקת לנסות להשיג — התחלת למשוך.</p>`
-  },
-  {
-    icon:"🍷", title:"איך לזרום בדייט ראשון — המדריך המלא",
-    excerpt:"מאיפה לקבוע, על מה לדבר, ומתי לסיים — כדי שיהיה דייט שני.",
-    body:`
+      <p>כשאתה נהנה מהשיחה עצמה בלי "לצוד" משהו, הכול משתנה. היא מרגישה את זה. פרדוקסלית, ברגע שהפסקת לנסות להשיג — התחלת למשוך.</p>`,
+        },
+        {
+          icon: "🍷",
+          title: "איך לזרום בדייט ראשון — המדריך המלא",
+          excerpt: "מאיפה לקבוע, על מה לדבר, ומתי לסיים — כדי שיהיה דייט שני.",
+          body: `
       <h3>מקום נכון = חצי עבודה</h3>
       <p>לא סרט (אי אפשר לדבר) ולא ארוחה כבדה (לחץ). בר נעים, בית קפה, הליכה בטיילת. מקום שמאפשר שיחה ומאפשר לזוז אם כיף לכם.</p>
       <h3>הטלפון בכיס. נקודה.</h3>
@@ -849,12 +1113,14 @@ const ARTICLES = [
       <h3>שיחה: 50/50</h3>
       <p>אל תהפוך את זה לראיון עבודה שלה, ואל תנאם על עצמך. שאלה, תשובה, שיתוף משלך, וחוזר חלילה. אם היא צוחקת ושואלת אותך שאלות בחזרה — אתה במסלול.</p>
       <h3>תסיים בשיא</h3>
-      <p>עדיף דייט של שעה וחצי שנגמר כשכיף, מדייט של ארבע שעות שדעך. "היה לי ממש כיף, בוא נעשה את זה שוב" — ישיר, בטוח, עובד.</p>`
-  },
-  {
-    icon:"🧲", title:"איך לגרום לבחורות להימשך אליך",
-    excerpt:"משיכה היא לא מזל — היא שפה. שפת גוף, אנרגיה, וכמה הרגלים שמשנים הכול.",
-    body:`
+      <p>עדיף דייט של שעה וחצי שנגמר כשכיף, מדייט של ארבע שעות שדעך. "היה לי ממש כיף, בוא נעשה את זה שוב" — ישיר, בטוח, עובד.</p>`,
+        },
+        {
+          icon: "🧲",
+          title: "איך לגרום לבחורות להימשך אליך",
+          excerpt:
+            "משיכה היא לא מזל — היא שפה. שפת גוף, אנרגיה, וכמה הרגלים שמשנים הכול.",
+          body: `
       <h3>שפת גוף פתוחה</h3>
       <p>כתפיים לאחור, ראש זקוף, ידיים לא שלובות. לתפוס מקום בלי להשתלט. הגוף שלך מדבר לפני שאתה פותח את הפה — תוודא שהוא אומר "רגוע ובטוח".</p>
       <h3>קשר עין שיודע לחייך</h3>
@@ -864,12 +1130,14 @@ const ARTICLES = [
       <h3>עצמאות רגשית</h3>
       <p>זמינות של 24/7 והצפה בהודעות משדרות "אין לי חיים". תענה כשנוח לך, תיזום כשבא לך, ותשמור על העולם שלך. מסתורין קטן זה מנוע גדול.</p>
       <h3>וכן — ריח</h3>
-      <p>חוש הריח מחובר ישירות לזיכרון ולרגש. בושם טוב הוא הרושם שנשאר אחרי שהלכת. יש לנו מאמר שלם על זה 👇</p>`
-  },
-  {
-    icon:"🌸", title:"בשמים שבנות אוהבות — המדריך לגבר",
-    excerpt:"התווים שעובדים, כמה לרסס, ואיפה — כדי שהיא תזכור אותך גם מחר.",
-    body:`
+      <p>חוש הריח מחובר ישירות לזיכרון ולרגש. בושם טוב הוא הרושם שנשאר אחרי שהלכת. יש לנו מאמר שלם על זה 👇</p>`,
+        },
+        {
+          icon: "🌸",
+          title: "בשמים שבנות אוהבות — המדריך לגבר",
+          excerpt:
+            "התווים שעובדים, כמה לרסס, ואיפה — כדי שהיא תזכור אותך גם מחר.",
+          body: `
       <h3>התווים שנשים מדרגות גבוה</h3>
       <p>וניל וענבר (חמים ומתוק), תווים מעוצים כמו אוד וסנדלווד (גברי ועמוק), ותווים ארומטיים נקיים (לבנדר, ברגמוט) שמריחים כמו "גבר מסודר". מתוק־חם לערב, נקי־רענן ליום.</p>
       <h3>הכלל הכי חשוב: פחות זה יותר</h3>
@@ -877,35 +1145,41 @@ const ARTICLES = [
       <h3>מתי לרסס</h3>
       <p>מיד אחרי מקלחת, על עור לח מעט — כך הריח נטמע ומחזיק שעות. אל תשפשף פרקי ידיים זה בזה, זה שובר את התווים.</p>
       <h3>איך לבחור נכון</h3>
-      <p>אל תקנה לפי פרסומת. תרסס על נייר טעימות בחנות, תסתובב חצי שעה, ותריח שוב — בושם משתנה על העור עם הזמן. מה שמריח טוב אחרי שעה הוא הבושם שלך.</p>`
-  },
-];
+      <p>אל תקנה לפי פרסומת. תרסס על נייר טעימות בחנות, תסתובב חצי שעה, ותריח שוב — בושם משתנה על העור עם הזמן. מה שמריח טוב אחרי שעה הוא הבושם שלך.</p>`,
+        },
+      ];
 
-const blogGrid = document.getElementById('blogGrid');
-ARTICLES.forEach((a,i)=>{
-  const el = document.createElement('article');
-  el.className = 'bcard';
-  el.innerHTML = `<div class="bicon">${a.icon}</div><h3>${a.title}</h3><p>${a.excerpt}</p><span class="readmore">קרא עוד ←</span>`;
-  el.addEventListener('click', ()=>openArticle(i));
-  blogGrid.appendChild(el);
-});
-const blogModal = document.getElementById('blogModal');
-function openArticle(i){
-  const a = ARTICLES[i];
-  document.getElementById('blogContent').innerHTML =
-    `<h2>${a.title}</h2><div class="bmeta">המגזין של VELVET · קריאה של 3 דקות</div>${a.body}`;
-  blogModal.classList.add('show');
-  document.querySelector('.blog-article').scrollTop = 0;
-}
-document.getElementById('blogClose').addEventListener('click', ()=>blogModal.classList.remove('show'));
-blogModal.addEventListener('click', e=>{ if(e.target===blogModal) blogModal.classList.remove('show'); });
-document.getElementById('blogCtaBtn').addEventListener('click', ()=>blogModal.classList.remove('show'));
+      const blogGrid = document.getElementById("blogGrid");
+      ARTICLES.forEach((a, i) => {
+        const el = document.createElement("article");
+        el.className = "bcard";
+        el.innerHTML = `<div class="bicon">${a.icon}</div><h3>${a.title}</h3><p>${a.excerpt}</p><span class="readmore">קרא עוד ←</span>`;
+        el.addEventListener("click", () => openArticle(i));
+        blogGrid.appendChild(el);
+      });
+      const blogModal = document.getElementById("blogModal");
+      function openArticle(i) {
+        const a = ARTICLES[i];
+        document.getElementById("blogContent").innerHTML =
+          `<h2>${a.title}</h2><div class="bmeta">המגזין של VELVET · קריאה של 3 דקות</div>${a.body}`;
+        blogModal.classList.add("show");
+        document.querySelector(".blog-article").scrollTop = 0;
+      }
+      document
+        .getElementById("blogClose")
+        .addEventListener("click", () => blogModal.classList.remove("show"));
+      blogModal.addEventListener("click", (e) => {
+        if (e.target === blogModal) blogModal.classList.remove("show");
+      });
+      document
+        .getElementById("blogCtaBtn")
+        .addEventListener("click", () => blogModal.classList.remove("show"));
 
-/* ---------- sticky CTA ---------- */
-const sticky = document.getElementById('stickyCta');
-addEventListener('scroll', ()=>{
-  sticky.classList.toggle('show', scrollY > innerHeight*.8);
-});
-</script>
-</body>
+      /* ---------- sticky CTA ---------- */
+      const sticky = document.getElementById("stickyCta");
+      addEventListener("scroll", () => {
+        sticky.classList.toggle("show", scrollY > innerHeight * 0.8);
+      });
+    </script>
+  </body>
 </html>

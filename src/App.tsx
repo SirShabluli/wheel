@@ -9,7 +9,7 @@ import RevealSection from './components/effects/RevealSection'
 import AgeGate from './components/ageGate/AgeGate'
 import HeroSection from './components/hero/HeroSection'
 import GallerySection from './components/gallery/GallerySection'
-import SpinWheel from './components/wheel/SpinWheel'
+import SpinWheel, { type SpinWheelHandle } from './components/wheel/SpinWheel'
 import SpinsCounter from './components/wheel/SpinsCounter'
 import MatchModal from './components/matchModal/MatchModal'
 import Carousel3D from './components/carousel/Carousel3D'
@@ -23,6 +23,7 @@ export default function App() {
   const [winner, setWinner] = useState<Model | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
   const wheelRef = useRef<HTMLElement>(null)
+  const spinWheelRef = useRef<SpinWheelHandle>(null)
 
   const handleResult = (model: Model) => {
     recordSpin()
@@ -51,8 +52,20 @@ export default function App() {
         <RevealSection delay={0.1}><p className="section-sub">סיבוב אחד. זכייה אחת. שיחה אחת שתשנה לך את הערב.</p></RevealSection>
 
         <RevealSection delay={0.2} className="wheel-wrap">
-          <SpinWheel models={MODELS} onResult={handleResult} disabled={!canSpin} />
+          <SpinWheel ref={spinWheelRef} models={MODELS} onResult={handleResult} disabled={!canSpin} />
           <SpinsCounter spinsLeft={spinsLeft} maxSpins={maxSpins} />
+          <button
+            onClick={() => spinWheelRef.current?.spin()}
+            disabled={!canSpin}
+            className="btn-shine rounded-full font-black text-xl text-white transition-all hover:brightness-110 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:filter-none disabled:translate-y-0"
+            style={{
+              padding: '14px 48px',
+              background: !canSpin ? '#3a2f55' : 'linear-gradient(90deg, #ff2e88, #a855f7)',
+              boxShadow: !canSpin ? 'none' : '0 0 30px rgba(255,46,136,0.5)',
+            }}
+          >
+            {!canSpin ? 'סיבובים נגמרו' : 'סובב את הגלגל'}
+          </button>
           {!canSpin && (
             <div id="noSpins">
               <p>הסיבובים שלך נגמרו — אבל היא עדיין מחכה לך 👇</p>

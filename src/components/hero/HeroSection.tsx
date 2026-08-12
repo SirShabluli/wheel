@@ -4,11 +4,43 @@ interface Props {
   models: Model[]
 }
 
+const AVATAR_SIZE = 56
+const OVERLAP = 16
+
+function AvatarCollage({ models }: { models: Model[] }) {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: '10px 0', marginBottom: 36 }}>
+      {models.map((m, i) => (
+        <a
+          key={m.id}
+          href="#gallery"
+          title={m.name}
+          style={{
+            display: 'block',
+            width: AVATAR_SIZE,
+            height: AVATAR_SIZE,
+            borderRadius: '50%',
+            overflow: 'hidden',
+            marginLeft: i === 0 ? 0 : -OVERLAP,
+            border: '3px solid #ff2e88',
+            boxShadow: '0 0 18px rgba(255,46,136,0.45)',
+            background: '#1a1030',
+            position: 'relative',
+            zIndex: i,
+          }}
+        >
+          <img src={m.img} alt={m.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" />
+        </a>
+      ))}
+    </div>
+  )
+}
+
 export default function HeroSection({ models }: Props) {
   return (
-    <header className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6" style={{ gap: 0 }}>
+    <header className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center" style={{ gap: 0, paddingLeft: 'max(24px, 5vw)', paddingRight: 'max(24px, 5vw)' }}>
       {/* Logo */}
-      <div style={{ fontSize: 15, letterSpacing: '0.5em', fontWeight: 300, color: '#f5c542', marginBottom: 28 }}>
+      <div style={{ fontSize: 15, letterSpacing: '0.5em', fontWeight: 300, color: '#f5c542', marginBottom: 28, marginTop: 40 }}>
         V E L V E T
       </div>
 
@@ -20,7 +52,7 @@ export default function HeroSection({ models }: Props) {
       {/* H1 */}
       <h1
         style={{
-          fontSize: 'clamp(38px, 7vw, 74px)',
+          fontSize: 'clamp(28px, 7vw, 74px)',
           fontWeight: 900,
           lineHeight: 1.15,
           background: 'linear-gradient(92deg, #fff 20%, #ff2e88 60%, #a855f7)',
@@ -29,45 +61,15 @@ export default function HeroSection({ models }: Props) {
           backgroundClip: 'text',
           filter: 'drop-shadow(0 0 30px rgba(255,46,136,0.35))',
           marginBottom: 36,
+          maxWidth: 700,
+          width: '100%',
         }}
       >
         הרווקה הבאה שתכבוש אותך<br />נמצאת על הגלגל
       </h1>
 
-      {/* Collage */}
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0', marginBottom: 36 }}>
-        {models.map((m, i) => (
-          <a
-            key={m.id}
-            href="#gallery"
-            title={m.name}
-            style={{
-              display: 'block',
-              width: 'clamp(56px, 9vw, 92px)',
-              height: 'clamp(56px, 9vw, 92px)',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              marginLeft: i === 0 ? 0 : 'clamp(-22px, -2.4vw, -14px)',
-              border: '3px solid #ff2e88',
-              boxShadow: '0 0 18px rgba(255,46,136,0.45)',
-              background: '#1a1030',
-              transition: 'transform .25s, box-shadow .25s',
-              position: 'relative',
-              zIndex: i,
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.transform = 'translateY(-10px) scale(1.12)'
-              ;(e.currentTarget as HTMLElement).style.zIndex = '5'
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.transform = ''
-              ;(e.currentTarget as HTMLElement).style.zIndex = String(i)
-            }}
-          >
-            <img src={m.img} alt={m.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" />
-          </a>
-        ))}
-      </div>
+      {/* Avatar collage */}
+      <AvatarCollage models={models} />
 
       {/* Sub */}
       <p style={{ fontSize: 'clamp(16px, 2.4vw, 21px)', color: '#9b8fb8', maxWidth: 600, marginBottom: 44, lineHeight: 1.7 }}>

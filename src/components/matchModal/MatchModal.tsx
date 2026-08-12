@@ -58,17 +58,18 @@ export default function MatchModal({ model, onClose, onSpinAgain, canSpinAgain }
           >
             {/* Avatar */}
             <div
-              className="relative h-64 flex items-center justify-center text-7xl font-black"
-              style={{
-                backgroundImage: `url('${model.imgWin}'), linear-gradient(135deg, ${model.gradientFrom}, ${model.gradientTo})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center top',
-              }}
+              className="relative w-full"
+              style={{ aspectRatio: '3/4' }}
             >
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(transparent 55%, #1c0e38)' }} />
+              <img
+                src={model.imgWin}
+                alt={model.name}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+              />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(transparent 60%, #1c0e38)' }} />
             </div>
 
-            <div className="px-7 pb-8 pt-2">
+            <div className="px-7 pb-16 pt-2">
               <span
                 className="inline-block font-black text-xs px-5 py-2 rounded-full -translate-y-1/2"
                 style={{ background: '#f5c542', color: '#1a1030', boxShadow: '0 0 18px rgba(245,197,66,0.6)' }}
@@ -78,28 +79,43 @@ export default function MatchModal({ model, onClose, onSpinAgain, canSpinAgain }
               <h3 className="text-3xl font-black mb-2">{model.name}</h3>
               <p className="mb-6 leading-relaxed" style={{ color: '#9b8fb8' }}>{model.tagline}</p>
 
-              <a
-                href={model.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-shine block w-full py-4 rounded-full font-black text-lg text-white no-underline mb-3"
-                style={{
-                  background: 'linear-gradient(90deg, #ff2e88, #a855f7)',
-                  boxShadow: '0 0 24px rgba(255,46,136,0.5)',
-                }}
-              >
-                התחל לדבר איתה עכשיו →
-              </a>
-
-              {canSpinAgain && (
-                <button
-                  onClick={onSpinAgain}
-                  className="text-sm underline"
-                  style={{ background: 'none', border: 'none', color: '#9b8fb8', cursor: 'pointer' }}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+                <a
+                  href={model.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-shine rounded-full font-black text-lg text-white no-underline"
+                  style={{
+                    background: 'linear-gradient(90deg, #ff2e88, #a855f7)',
+                    boxShadow: '0 0 24px rgba(255,46,136,0.5)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    flexDirection: 'row-reverse',
+                    gap: 10,
+                    padding: '14px 32px',
+                  }}
                 >
-                  או... נסה את מזלך שוב
-                </button>
-              )}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                  דבר איתה עכשיו
+                </a>
+
+                {canSpinAgain && (
+                  <button
+                    onClick={onSpinAgain}
+                    className="rounded-full font-black text-sm"
+                    style={{
+                      background: 'none',
+                      border: '1.5px solid #f5c542',
+                      color: '#f5c542',
+                      cursor: 'pointer',
+                      padding: '8px 20px',
+                      marginBottom: 8,
+                    }}
+                  >
+                    סיבוב נוסף
+                  </button>
+                )}
+              </div>
             </div>
           </motion.div>
         </motion.div>

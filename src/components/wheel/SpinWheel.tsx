@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react'
 import type { Model } from '../../data/models'
 
 interface Props {
@@ -7,7 +7,11 @@ interface Props {
   disabled: boolean
 }
 
-export default function SpinWheel({ models, onResult, disabled }: Props) {
+export interface SpinWheelHandle {
+  spin: () => void
+}
+
+const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel({ models, onResult, disabled }, ref) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const angleRef = useRef(0)
   const spinningRef = useRef(false)
@@ -47,7 +51,7 @@ export default function SpinWheel({ models, onResult, disabled }: Props) {
       ctx.rotate(i * SEG + SEG / 2 - Math.PI / 2)
 
       // Avatar circle
-      const ar = 58, ax = R * 0.56
+      const ar = Math.min(58, (R * Math.sin(SEG / 2)) * 0.75), ax = R * 0.82
       ctx.save()
       ctx.translate(ax, 0)
       ctx.rotate(Math.PI / 2)
@@ -77,16 +81,17 @@ export default function SpinWheel({ models, onResult, disabled }: Props) {
 
       // Name label
       ctx.save()
-      ctx.translate(R * 0.85, 0)
-      ctx.rotate(Math.PI / 2)
+      ctx.translate(R * 0.50, 0)
       ctx.fillStyle = '#fff'
-      const long = m.name.length > 6
-      ctx.font = `900 ${long ? 28 : 36}px Heebo, sans-serif`
+      ctx.font = `400 36px Heebo, sans-serif`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       ctx.shadowColor = 'rgba(0,0,0,0.7)'
       ctx.shadowBlur = 8
-      ctx.fillText(m.name, 0, 0)
+      const PREFIXES = ['Spicy', 'Crazy', 'Barbie']
+      const parts = m.name.split(' ')
+      const firstName = PREFIXES.includes(parts[0]) ? parts[1] : parts[0]
+      ctx.fillText(firstName, 0, 0)
       ctx.restore()
 
       ctx.restore()
@@ -160,8 +165,10 @@ export default function SpinWheel({ models, onResult, disabled }: Props) {
     requestAnimationFrame(animate)
   }, [disabled, models, N, SEG, drawWheel, onResult])
 
+  useImperativeHandle(ref, () => ({ spin }), [spin])
+
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center">
       {/* Wheel */}
       <div className="relative" style={{ width: 'min(86vw, 440px)', height: 'min(86vw, 440px)' }}>
         {/* Pointer */}
@@ -203,19 +210,8 @@ export default function SpinWheel({ models, onResult, disabled }: Props) {
           מי<br />תזכה?
         </div>
       </div>
-
-      {/* Spin button */}
-      <button
-        onClick={spin}
-        disabled={disabled}
-        className="btn-shine py-5 px-16 rounded-full font-black text-xl text-white transition-all hover:brightness-110 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:filter-none disabled:translate-y-0"
-        style={{
-          background: disabled ? '#3a2f55' : 'linear-gradient(90deg, #ff2e88, #a855f7)',
-          boxShadow: disabled ? 'none' : '0 0 30px rgba(255,46,136,0.5)',
-        }}
-      >
-        {disabled ? 'סיבובים נגמרו' : 'סובב את הגלגל'}
-      </button>
     </div>
   )
-}
+})
+
+export default SpinWheel

@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
 import type { Model } from '../../data/models'
 import RevealSection from '../effects/RevealSection'
 
@@ -7,78 +6,49 @@ interface Props {
 }
 
 export default function Carousel3D({ models }: Props) {
-  const [angle, setAngle] = useState(0)
-  const dragging = useRef(false)
-  const dragX = useRef(0)
-  const dragStartAngle = useRef(0)
-  const N = models.length
-  const step = 360 / N
-  const radius = Math.round((280 / 2) / Math.tan(Math.PI / N)) + 60
-
-  useEffect(() => {
-    let idle = 0
-    const timer = setInterval(() => {
-      if (!dragging.current) {
-        idle++
-        if (idle > 6) { setAngle(a => a - step); idle = 0 }
-      }
-    }, 1000)
-    const reset = () => { idle = 0 }
-    window.addEventListener('mousedown', reset)
-    window.addEventListener('touchstart', reset)
-    window.addEventListener('click', reset)
-    return () => {
-      clearInterval(timer)
-      window.removeEventListener('mousedown', reset)
-      window.removeEventListener('touchstart', reset)
-      window.removeEventListener('click', reset)
-    }
-  }, [step])
-
-  const dStart = (x: number) => { dragging.current = true; dragX.current = x; dragStartAngle.current = angle }
-  const dMove = (x: number) => { if (!dragging.current) return; setAngle(dragStartAngle.current + (x - dragX.current) * 0.35) }
-  const dEnd = () => { if (!dragging.current) return; dragging.current = false; setAngle(a => Math.round(a / step) * step) }
-
   return (
-    <section className="carousel-section relative z-10 py-24 px-6" id="models">
+    <section className="relative z-10 py-24 overflow-hidden" id="models">
       <RevealSection><h2 className="section-title">עוד סיבוב ביניהן?</h2></RevealSection>
-      <RevealSection delay={0.1}><p className="section-sub">גרור, סובב, בחר.</p></RevealSection>
+      <RevealSection delay={0.1}><p className="section-sub">גלול בין הבנות, בחר את שלך.</p></RevealSection>
 
-      <RevealSection delay={0.2}>
-        <div
-          className="scene"
-          onMouseDown={e => dStart(e.clientX)}
-          onMouseMove={e => dMove(e.clientX)}
-          onMouseUp={dEnd}
-          onMouseLeave={dEnd}
-          onTouchStart={e => dStart(e.touches[0].clientX)}
-          onTouchMove={e => dMove(e.touches[0].clientX)}
-          onTouchEnd={dEnd}
-        >
+      <div style={{
+        display: 'flex',
+        gap: 16,
+        overflowX: 'auto',
+        scrollSnapType: 'x mandatory',
+        WebkitOverflowScrolling: 'touch',
+        padding: '12px 24px 24px',
+        scrollbarWidth: 'none',
+        marginLeft: -24,
+        marginRight: -24,
+      }}>
+        {models.map(m => (
           <div
-            className="ring"
-            style={{ transform: `rotateY(${angle}deg)`, transition: dragging.current ? 'none' : undefined }}
+            key={m.id}
+            style={{
+              scrollSnapAlign: 'start',
+              flexShrink: 0,
+              width: 200,
+              borderRadius: 20,
+              overflow: 'hidden',
+              background: '#1a1030',
+              border: '1px solid rgba(168,85,247,0.3)',
+            }}
           >
-            {models.map((m, i) => (
-              <div key={m.id} className="card3d" style={{ transform: `rotateY(${i * step}deg) translateZ(${radius}px)` }}>
-                {m.online && <div className="online"><i />אונליין עכשיו</div>}
-                <div className="ph" style={{ backgroundImage: `url('${m.img}'), linear-gradient(135deg, ${m.gradientFrom}, ${m.gradientTo})` }} />
-                <div className="card-info">
-                  <h4>{m.name}</h4>
-                  <div className="tag">{m.tagline}</div>
-                  <a className="btn btn-primary" href={m.link} target="_blank" rel="noopener noreferrer">לצ'אט איתה →</a>
-                </div>
-              </div>
-            ))}
+            <img
+              src={m.img}
+              alt={m.name}
+              style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+            />
+            <div style={{ padding: '14px 16px 18px', textAlign: 'center' }}>
+              <h4 style={{ fontWeight: 800, marginBottom: 10 }}>{m.name}</h4>
+              <a href={m.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ display: 'block', fontSize: 13 }}>
+                לצ'אט איתה
+              </a>
+            </div>
           </div>
-        </div>
-
-        <div className="carousel-nav">
-          <button className="btn nav-btn" onClick={() => setAngle(a => a - step)}>‹</button>
-          <button className="btn nav-btn" onClick={() => setAngle(a => a + step)}>›</button>
-        </div>
-        <div className="carousel-hint">אפשר גם לגרור את הקלפים עם האצבע או העכבר</div>
-      </RevealSection>
+        ))}
+      </div>
     </section>
   )
 }

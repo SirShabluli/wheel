@@ -117,8 +117,8 @@ html {
 
 /* ---------- sections ---------- */
 section { position: relative; z-index: 1; padding: 120px 24px; }
-.section-title { text-align: center; font-size: clamp(28px,4.5vw,44px); font-weight: 900; margin-bottom: 16px; }
-.section-sub { text-align: center; color: #9b8fb8; margin-bottom: 72px; font-size: 17px; line-height: 1.9; }
+.section-title { text-align: center; font-size: clamp(28px,4.5vw,44px); font-weight: 900; margin-bottom: 16px; padding: 0 24px; }
+.section-sub { text-align: center; color: #9b8fb8; margin-bottom: 48px; font-size: 17px; line-height: 1.9; padding: 0 24px; }
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 /* אם IntersectionObserver לא הפעיל — תציג בכל מקרה */
@@ -159,6 +159,7 @@ section { position: relative; z-index: 1; padding: 120px 24px; }
   position: relative;
   background-size: cover;
   background-position: center top;
+  overflow: hidden;
 }
 .gcard .gph::after {
   content: '';
