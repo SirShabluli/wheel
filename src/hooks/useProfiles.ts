@@ -19,7 +19,11 @@ function mapProfile(p: Record<string, unknown>): Model {
     gradientTo:   '#7a1fa2',
     img:          imgUrl,
     imgWin:       imgUrl,
-    link:         String(p.telegramLink ?? '#'),
+    link:         (() => {
+      const buttons = p.linkButtons as Array<{ url?: string }> | undefined
+      const ofLink = buttons?.find(b => b.url?.includes('onlyfans.com'))?.url
+      return ofLink ?? String(p.telegramLink ?? '#')
+    })(),
     online:       Boolean(p.isVerified),
   }
 }
@@ -32,7 +36,10 @@ export function useProfiles() {
   useEffect(() => {
     fetch(`${API_BASE}/api/profiles`)
       .then(r => r.json())
-      .then((data: Record<string, unknown>[]) => setModels(data.map(mapProfile)))
+      .then((data: Record<string, unknown>[]) => {
+        const HIDDEN_HANDLES = ['@jade_teenofficial', '@itssagecollins', '@soapy_shayna', '@itsginnypotter', '@claudiatihan_official', '@NataliePopov']
+        setModels(data.map(mapProfile).filter(m => !HIDDEN_HANDLES.includes(m.tagline)))
+      })
       .catch(() => setError('שגיאה בטעינת פרופילים'))
       .finally(() => setLoading(false))
   }, [])

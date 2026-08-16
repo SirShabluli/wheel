@@ -149,7 +149,7 @@ section { position: relative; z-index: 1; padding: 120px 24px; }
   border-color: rgba(168,85,247,.7);
 }
 .gcard .gph {
-  height: 250px;
+  aspect-ratio: 3/4;
   display: flex;
   align-items: center;
   justify-content: center;
