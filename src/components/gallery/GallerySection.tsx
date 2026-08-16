@@ -3,9 +3,11 @@ import RevealSection from '../effects/RevealSection'
 
 interface Props {
   models: Model[]
+  selectedModelId: string | null
+  onSelectModel: (model: Model) => void
 }
 
-export default function GallerySection({ models }: Props) {
+export default function GallerySection({ models, selectedModelId, onSelectModel }: Props) {
   return (
     <section id="gallery" className="relative z-10 py-24 px-6">
       <RevealSection><h2 className="section-title">הכירו את הבנות</h2></RevealSection>
@@ -35,7 +37,13 @@ export default function GallerySection({ models }: Props) {
               <h4>{m.name}</h4>
               <div className="tag">{m.tagline}</div>
               <div className="gbtns">
-                <a className="btn btn-outline" href="#wheel">אני רוצה לזכות בה 🎡</a>
+                <a
+                  className={`btn ${selectedModelId === m.id ? 'btn-gold' : 'btn-outline'}`}
+                  href="#wheel"
+                  onClick={() => onSelectModel(m)}
+                >
+                  אני רוצה לזכות בה 🎡
+                </a>
                 <a className="btn btn-primary" href={m.link} target="_blank" rel="noopener">לפרופיל שלה</a>
               </div>
             </div>

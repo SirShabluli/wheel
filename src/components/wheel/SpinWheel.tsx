@@ -1,23 +1,24 @@
 import { useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react'
+import type { Prize } from '../../data/prizes'
 import type { Model } from '../../data/models'
 
 interface Props {
-  models: Model[]
-  onResult: (model: Model) => void
+  prizes: Prize[]
+  onResult: (prize: Prize) => void
   disabled: boolean
+  selectedModel?: Model | null
 }
 
 export interface SpinWheelHandle {
   spin: () => void
 }
 
-const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel({ models, onResult, disabled }, ref) {
+const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel({ prizes, onResult, disabled, selectedModel }, ref) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const angleRef = useRef(0)
   const spinningRef = useRef(false)
-  const imgsRef = useRef<(HTMLImageElement | null)[]>([])
 
-  const N = models.length
+  const N = prizes.length
   const SEG = (2 * Math.PI) / N
   const CX = 480
   const R = 460
@@ -32,10 +33,10 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel({ models
     ctx.rotate(angle)
 
     for (let i = 0; i < N; i++) {
-      const m = models[i]
+      const p = prizes[i]
       const g = ctx.createLinearGradient(-R, 0, R, 0)
-      g.addColorStop(0, m.gradientFrom)
-      g.addColorStop(1, m.gradientTo)
+      g.addColorStop(0, p.gradientFrom)
+      g.addColorStop(1, p.gradientTo)
 
       ctx.beginPath()
       ctx.moveTo(0, 0)
@@ -50,68 +51,59 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel({ models
       ctx.save()
       ctx.rotate(i * SEG + SEG / 2 - Math.PI / 2)
 
-      // Avatar circle
-      const ar = Math.min(58, (R * Math.sin(SEG / 2)) * 0.75), ax = R * 0.82
+      // Prize name (outer, near edge)
       ctx.save()
-      ctx.translate(ax, 0)
+      ctx.translate(R * 0.78, 0)
       ctx.rotate(Math.PI / 2)
-      ctx.beginPath()
-      ctx.arc(0, 0, ar, 0, Math.PI * 2)
-      ctx.fillStyle = 'rgba(255,255,255,0.18)'
-      ctx.fill()
-      ctx.save()
-      ctx.clip()
-      const img = imgsRef.current[i]
-      if (img && img.complete && img.naturalWidth > 0) {
-        ctx.drawImage(img, -ar, -ar, ar * 2, ar * 2)
-      } else {
-        ctx.fillStyle = 'rgba(255,255,255,0.85)'
-        ctx.font = '900 50px Heebo, sans-serif'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText(m.initial, 0, 4)
-      }
-      ctx.restore()
-      ctx.beginPath()
-      ctx.arc(0, 0, ar, 0, Math.PI * 2)
-      ctx.strokeStyle = 'rgba(255,255,255,0.85)'
-      ctx.lineWidth = 3
-      ctx.stroke()
-      ctx.restore()
-
-      // Name label
-      ctx.save()
-      ctx.translate(R * 0.50, 0)
       ctx.fillStyle = '#fff'
-      ctx.font = `400 36px Heebo, sans-serif`
+      ctx.font = '700 34px Heebo, sans-serif'
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       ctx.shadowColor = 'rgba(0,0,0,0.7)'
       ctx.shadowBlur = 8
-      const PREFIXES = ['Spicy', 'Crazy', 'Barbie']
-      const parts = m.name.split(' ')
-      const firstName = PREFIXES.includes(parts[0]) ? parts[1] : parts[0]
-      ctx.fillText(firstName, 0, 0)
+
+      // Split name into lines if too long
+      const words = p.name.split(' ')
+      const lines: string[] = []
+      let currentLine = ''
+      for (const word of words) {
+        const test = currentLine ? `${currentLine} ${word}` : word
+        if (ctx.measureText(test).width > 130) {
+          lines.push(currentLine)
+          currentLine = word
+        } else {
+          currentLine = test
+        }
+      }
+      if (currentLine) lines.push(currentLine)
+
+      const lineHeight = 30
+      const startY = -((lines.length - 1) * lineHeight) / 2
+      for (let l = 0; l < lines.length; l++) {
+        ctx.fillText(lines[l], 0, startY + l * lineHeight)
+      }
       ctx.restore()
 
+      // Emoji (inner, near center)
+      ctx.save()
+      ctx.translate(R * 0.55, 0)
+      ctx.rotate(Math.PI / 2)
+      ctx.font = '48px serif'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText(p.emoji, 0, 0)
+
+      ctx.restore()
       ctx.restore()
     }
 
     ctx.restore()
-  }, [models, N, SEG, R])
+  }, [prizes, N, SEG, R])
 
-  // Load images
+  // Initial draw
   useEffect(() => {
-    imgsRef.current = models.map((m, i) => {
-      const img = new Image()
-      img.crossOrigin = 'anonymous'
-      img.src = m.img
-      img.onload = () => drawWheel(angleRef.current)
-      imgsRef.current[i] = img
-      return img
-    })
     drawWheel(0)
-  }, [models, drawWheel])
+  }, [drawWheel])
 
   const spin = useCallback(() => {
     if (spinningRef.current || disabled) return
@@ -158,12 +150,12 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel({ models
         requestAnimationFrame(animate)
       } else {
         spinningRef.current = false
-        onResult(models[winner])
+        onResult(prizes[winner])
       }
     }
 
     requestAnimationFrame(animate)
-  }, [disabled, models, N, SEG, drawWheel, onResult])
+  }, [disabled, prizes, N, SEG, drawWheel, onResult])
 
   useImperativeHandle(ref, () => ({ spin }), [spin])
 
@@ -198,16 +190,24 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel({ models
 
         {/* Hub */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full z-10 flex items-center justify-center font-black text-sm text-center leading-tight"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full z-10 flex items-center justify-center font-black text-sm text-center leading-tight overflow-hidden"
           style={{
-            width: 72,
-            height: 72,
+            width: 110,
+            height: 110,
             background: 'radial-gradient(circle at 35% 30%, #3a2364, #160b2c)',
             border: '2px solid #f5c542',
             color: '#f5c542',
           }}
         >
-          מי<br />תזכה?
+          {selectedModel ? (
+            <img
+              src={selectedModel.img}
+              alt={selectedModel.name}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          ) : (
+            <>מה<br />תזכה?</>
+          )}
         </div>
       </div>
     </div>

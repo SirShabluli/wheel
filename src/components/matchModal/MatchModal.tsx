@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { Model } from '../../data/models'
+import type { Prize } from '../../data/prizes'
 
 interface Props {
-  model: Model | null
+  prize: Prize | null
   onClose: () => void
   onSpinAgain: () => void
   canSpinAgain: boolean
@@ -28,14 +28,14 @@ function confetti() {
   }
 }
 
-export default function MatchModal({ model, onClose, onSpinAgain, canSpinAgain }: Props) {
+export default function MatchModal({ prize, onClose, onSpinAgain, canSpinAgain }: Props) {
   useEffect(() => {
-    if (model) confetti()
-  }, [model])
+    if (prize) confetti()
+  }, [prize])
 
   return (
     <AnimatePresence>
-      {model && (
+      {prize && (
         <motion.div
           className="fixed inset-0 z-[90] flex items-center justify-center"
           style={{ background: 'rgba(8,5,16,0.85)', backdropFilter: 'blur(10px)' }}
@@ -56,48 +56,69 @@ export default function MatchModal({ model, onClose, onSpinAgain, canSpinAgain }
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: 'spring', damping: 15 }}
           >
-            {/* Avatar */}
+            {/* Prize emoji hero */}
             <div
-              className="relative w-full"
-              style={{ aspectRatio: '3/4' }}
+              className="relative w-full flex items-center justify-center"
+              style={{
+                aspectRatio: '4/3',
+                background: `linear-gradient(135deg, ${prize.gradientFrom}, ${prize.gradientTo})`,
+              }}
             >
-              <img
-                src={model.imgWin}
-                alt={model.name}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
-              />
+              <motion.span
+                className="text-8xl"
+                initial={{ scale: 0, rotate: -20 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', damping: 10, delay: 0.2 }}
+              >
+                {prize.emoji}
+              </motion.span>
               <div className="absolute inset-0" style={{ background: 'linear-gradient(transparent 60%, #1c0e38)' }} />
             </div>
 
-            <div className="px-7 pb-16 pt-2">
+            <div className="px-7 pb-14 pt-2">
               <span
                 className="inline-block font-black text-xs px-5 py-2 rounded-full -translate-y-1/2"
                 style={{ background: '#f5c542', color: '#1a1030', boxShadow: '0 0 18px rgba(245,197,66,0.6)' }}
               >
-                ✦ זכית בה ✦
+                ✦ זכית! ✦
               </span>
-              <h3 className="text-3xl font-black mb-2">{model.name}</h3>
-              <p className="mb-6 leading-relaxed" style={{ color: '#9b8fb8' }}>{model.tagline}</p>
+              <h3 className="text-3xl font-black mb-2">{prize.name}</h3>
+              <p className="mb-6 leading-relaxed" style={{ color: '#9b8fb8' }}>{prize.description}</p>
 
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-                <a
-                  href={model.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-shine rounded-full font-black text-lg text-white no-underline"
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+                {prize.link && (
+                  <a
+                    href={prize.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-shine rounded-full font-black text-lg text-white no-underline"
+                    style={{
+                      background: 'linear-gradient(90deg, #ff2e88, #a855f7)',
+                      boxShadow: '0 0 24px rgba(255,46,136,0.5)',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      padding: '14px 32px',
+                    }}
+                  >
+                    מימוש הפרס
+                  </a>
+                )}
+
+                <button
+                  onClick={onClose}
+                  className="btn-shine rounded-full font-black text-lg text-white"
                   style={{
                     background: 'linear-gradient(90deg, #ff2e88, #a855f7)',
                     boxShadow: '0 0 24px rgba(255,46,136,0.5)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    flexDirection: 'row-reverse',
-                    gap: 10,
                     padding: '14px 32px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    marginBottom: !canSpinAgain ? 24 : 0,
                   }}
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-                  דבר איתה עכשיו
-                </a>
+                  קבל את הקופון שלך
+                </button>
 
                 {canSpinAgain && (
                   <button

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import type { Model } from '../../data/models'
+import type { Prize } from '../../data/prizes'
 
 interface Props {
-  winner: Model | null
+  winner: Prize | null
 }
 
 export default function StickyCta({ winner }: Props) {
@@ -20,17 +20,11 @@ export default function StickyCta({ winner }: Props) {
       className={show ? 'show' : ''}
     >
       <span>
-        {winner ? `זכית ב${winner.name} 💜` : 'עוד לא סובבת את הגלגל 🎡'}
+        {winner ? `זכית: ${winner.name} ${winner.emoji}` : 'עוד לא סובבת את הגלגל 🎡'}
       </span>
-      {winner ? (
-        <a className="btn btn-primary" href={winner.link} target="_blank" rel="noopener">
-          לפרופיל שלה
-        </a>
-      ) : (
-        <a className="btn btn-primary" href="#wheel">
-          לגלגל
-        </a>
-      )}
+      <a className="btn btn-primary" href="#wheel">
+        {winner ? 'סיבוב נוסף' : 'לגלגל'}
+      </a>
     </div>
   )
 }

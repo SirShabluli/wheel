@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import type { Model } from './data/models'
+import type { Prize } from './data/prizes'
+import { PRIZES } from './data/prizes'
 import { useAgeGate } from './hooks/useAgeGate'
 import { useSpins } from './hooks/useSpins'
 import { useProfiles } from './hooks/useProfiles'
@@ -20,14 +22,15 @@ export default function App() {
   const { confirmed, confirm } = useAgeGate()
   const { spinsLeft, canSpin, maxSpins, recordSpin } = useSpins()
   const { models: MODELS, loading } = useProfiles()
-  const [winner, setWinner] = useState<Model | null>(null)
+  const [winner, setWinner] = useState<Prize | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
+  const [selectedModel, setSelectedModel] = useState<Model | null>(null)
   const wheelRef = useRef<HTMLElement>(null)
   const spinWheelRef = useRef<SpinWheelHandle>(null)
 
-  const handleResult = (model: Model) => {
+  const handleResult = (prize: Prize) => {
     recordSpin()
-    setWinner(model)
+    setWinner(prize)
     setModalOpen(true)
   }
 
@@ -44,15 +47,15 @@ export default function App() {
       <AgeGate confirmed={confirmed} onConfirm={confirm} />
 
       <HeroSection models={MODELS} />
-      <GallerySection models={MODELS} />
+      <GallerySection models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
 
       {/* Wheel Section */}
       <section ref={wheelRef as React.RefObject<HTMLElement>} id="wheel">
         <RevealSection><h2 className="section-title">גלגל הזכייה</h2></RevealSection>
-        <RevealSection delay={0.1}><p className="section-sub">סיבוב אחד. זכייה אחת. שיחה אחת שתשנה לך את הערב.</p></RevealSection>
+        <RevealSection delay={0.1}><p className="section-sub">סובב את הגלגל וזכה בפרסים בלעדיים!</p></RevealSection>
 
         <RevealSection delay={0.2} className="wheel-wrap">
-          <SpinWheel ref={spinWheelRef} models={MODELS} onResult={handleResult} disabled={!canSpin} />
+          <SpinWheel ref={spinWheelRef} prizes={PRIZES} onResult={handleResult} disabled={!canSpin} selectedModel={selectedModel} />
           <SpinsCounter spinsLeft={spinsLeft} maxSpins={maxSpins} />
           <button
             onClick={() => spinWheelRef.current?.spin()}
@@ -68,7 +71,7 @@ export default function App() {
           </button>
           {!canSpin && (
             <div id="noSpins">
-              <p>הסיבובים שלך נגמרו — אבל היא עדיין מחכה לך 👇</p>
+              <p>הסיבובים שלך נגמרו 👇</p>
               <a href="#gallery"><button className="btn btn-gold">לכל הבנות</button></a>
             </div>
           )}
@@ -86,7 +89,7 @@ export default function App() {
       </footer>
 
       <MatchModal
-        model={modalOpen ? winner : null}
+        prize={modalOpen ? winner : null}
         onClose={() => setModalOpen(false)}
         onSpinAgain={handleSpinAgain}
         canSpinAgain={canSpin}
