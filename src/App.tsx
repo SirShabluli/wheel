@@ -13,7 +13,7 @@ import SpinWheel, { type SpinWheelHandle } from './components/wheel/SpinWheel'
 import SpinsCounter from './components/wheel/SpinsCounter'
 import MatchModal from './components/matchModal/MatchModal'
 import Carousel3D from './components/carousel/Carousel3D'
-import BlogSection from './components/blog/BlogSection'
+
 import StickyCta from './components/stickyCta/StickyCta'
 
 export default function App() {
