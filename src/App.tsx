@@ -78,7 +78,7 @@ export default function App() {
         </RevealSection>
       </section>
 
-      <Carousel3D models={MODELS} />
+      <Carousel3D models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
 
       <footer>
         <div style={{ fontSize: 15, letterSpacing: '.5em', fontWeight: 300, color: '#f5c542', marginBottom: 8, textTransform: 'uppercase' }}>

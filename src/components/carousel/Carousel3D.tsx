@@ -3,9 +3,11 @@ import RevealSection from '../effects/RevealSection'
 
 interface Props {
   models: Model[]
+  selectedModelId: string | null
+  onSelectModel: (model: Model) => void
 }
 
-export default function Carousel3D({ models }: Props) {
+export default function Carousel3D({ models, selectedModelId, onSelectModel }: Props) {
   return (
     <section className="relative z-10 py-24 overflow-hidden" id="models">
       <RevealSection><h2 className="section-title">עוד סיבוב ביניהן?</h2></RevealSection>
@@ -13,7 +15,7 @@ export default function Carousel3D({ models }: Props) {
 
       <div style={{
         display: 'flex',
-        gap: 16,
+        gap: 20,
         overflowX: 'auto',
         scrollSnapType: 'x mandatory',
         WebkitOverflowScrolling: 'touch',
@@ -28,7 +30,7 @@ export default function Carousel3D({ models }: Props) {
             style={{
               scrollSnapAlign: 'start',
               flexShrink: 0,
-              width: 200,
+              width: 280,
               borderRadius: 20,
               overflow: 'hidden',
               background: '#1a1030',
@@ -40,11 +42,21 @@ export default function Carousel3D({ models }: Props) {
               alt={m.name}
               style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
             />
-            <div style={{ padding: '14px 16px 18px', textAlign: 'center' }}>
-              <h4 style={{ fontWeight: 800, marginBottom: 10 }}>{m.name}</h4>
-              <a href={m.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ display: 'block', fontSize: 13 }}>
-                לצ'אט איתה
-              </a>
+            <div style={{ padding: '16px 18px 22px', textAlign: 'center' }}>
+              <h4 style={{ fontWeight: 800, marginBottom: 12, fontSize: 18 }}>{m.name}</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <a
+                  className={`btn ${selectedModelId === m.id ? 'btn-gold' : 'btn-outline'}`}
+                  href="#wheel"
+                  onClick={() => onSelectModel(m)}
+                  style={{ display: 'block', fontSize: 14 }}
+                >
+                  אני רוצה לזכות בה 🎡
+                </a>
+                <a href={m.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ display: 'block', fontSize: 14 }}>
+                  לפרופיל שלה
+                </a>
+              </div>
             </div>
           </div>
         ))}

@@ -112,6 +112,8 @@ html {
   background: rgba(245,197,66,.08);
   color: #f5c542;
   border: 1px solid rgba(245,197,66,.5);
+  padding: 14px 34px;
+  font-size: 16px;
 }
 .btn-outline:hover { background: rgba(245,197,66,.2); }
 
