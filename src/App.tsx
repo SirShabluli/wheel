@@ -76,7 +76,6 @@ export default function App() {
       </section>
 
       <Carousel3D models={MODELS} />
-      <BlogSection />
 
       <footer>
         <div style={{ fontSize: 15, letterSpacing: '.5em', fontWeight: 300, color: '#f5c542', marginBottom: 8, textTransform: 'uppercase' }}>
