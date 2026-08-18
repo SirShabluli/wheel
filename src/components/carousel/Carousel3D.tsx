@@ -10,7 +10,12 @@ interface Props {
 export default function Carousel3D({ models, selectedModelId, onSelectModel }: Props) {
   return (
     <section className="relative z-10 py-24 overflow-hidden" id="models">
-      <RevealSection><h2 className="section-title">עוד סיבוב ביניהן?</h2></RevealSection>
+      <RevealSection>
+        <h2 className="section-title">
+          <span className="md:hidden">הכירו את הבנות שלנו</span>
+          <span className="hidden md:inline">עוד סיבוב ביניהן?</span>
+        </h2>
+      </RevealSection>
       <RevealSection delay={0.1}><p className="section-sub">גלול בין הבנות, בחר את שלך.</p></RevealSection>
 
       <div style={{

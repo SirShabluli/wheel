@@ -79,7 +79,7 @@ export default function App() {
             {!canSpin ? 'סיבובים נגמרו' : 'סובב את הגלגל'}
           </button>
           {!canSpin && (
-            <div id="noSpins">
+            <div id="noSpins" className="hidden md:block">
               <p>הסיבובים שלך נגמרו 👇</p>
               <a href="#gallery"><button className="btn btn-gold">לכל הבנות</button></a>
             </div>
