@@ -47,7 +47,16 @@ export default function App() {
       <AgeGate confirmed={confirmed} onConfirm={confirm} />
 
       <HeroSection models={MODELS} />
-      <GallerySection models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
+
+      {/* Gallery - desktop only */}
+      <div className="hidden md:block">
+        <GallerySection models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
+      </div>
+
+      {/* Carousel - mobile: before wheel, desktop: after wheel */}
+      <div className="md:hidden">
+        <Carousel3D models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
+      </div>
 
       {/* Wheel Section */}
       <section ref={wheelRef as React.RefObject<HTMLElement>} id="wheel">
@@ -78,7 +87,10 @@ export default function App() {
         </RevealSection>
       </section>
 
-      <Carousel3D models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
+      {/* Carousel - desktop: after wheel */}
+      <div className="hidden md:block">
+        <Carousel3D models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
+      </div>
 
       <footer>
         <div style={{ fontSize: 15, letterSpacing: '.5em', fontWeight: 300, color: '#f5c542', marginBottom: 8, textTransform: 'uppercase' }}>
