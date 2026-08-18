@@ -376,7 +376,7 @@ section { position: relative; z-index: 1; padding: 120px 24px; }
 
 /* ---------- wheel section ---------- */
 .wheel-wrap { display: flex; flex-direction: column; align-items: center; gap: 28px; }
-#noSpins { display: block; margin-top: 8px; text-align: center; }
+#noSpins { margin-top: 8px; text-align: center; }
 #noSpins p { color: #f3eefc; font-size: 16px; margin-bottom: 18px; }
 
 /* ---------- footer ---------- */
