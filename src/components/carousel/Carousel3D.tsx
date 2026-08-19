@@ -50,14 +50,13 @@ export default function Carousel3D({ models, selectedModelId, onSelectModel }: P
             <div style={{ padding: '16px 18px 22px', textAlign: 'center' }}>
               <h4 style={{ fontWeight: 800, marginBottom: 12, fontSize: 18 }}>{m.name}</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <a
+                <button
                   className={`btn ${selectedModelId === m.id ? 'btn-gold' : 'btn-outline'}`}
-                  href="#wheel"
                   onClick={() => onSelectModel(m)}
-                  style={{ display: 'block', fontSize: 14 }}
+                  style={{ display: 'block', fontSize: 14, width: '100%' }}
                 >
                   אני רוצה לזכות בה 🎡
-                </a>
+                </button>
                 <a href={m.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ display: 'block', fontSize: 14 }}>
                   לפרופיל שלה
                 </a>

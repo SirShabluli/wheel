@@ -109,7 +109,14 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel({ prizes
     if (spinningRef.current || disabled) return
     spinningRef.current = true
 
-    const winner = Math.floor(Math.random() * N)
+    // Weighted random selection
+    const totalWeight = prizes.reduce((sum, p) => sum + p.weight, 0)
+    let rand = Math.random() * totalWeight
+    let winner = 0
+    for (let i = 0; i < N; i++) {
+      rand -= prizes[i].weight
+      if (rand <= 0) { winner = i; break }
+    }
     const TWO_PI = Math.PI * 2
     const desired = (-(winner * SEG + SEG / 2) % TWO_PI + TWO_PI) % TWO_PI
     const startAngle = angleRef.current

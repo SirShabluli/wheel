@@ -37,13 +37,12 @@ export default function GallerySection({ models, selectedModelId, onSelectModel 
               <h4>{m.name}</h4>
               <div className="tag">{m.tagline}</div>
               <div className="gbtns">
-                <a
+                <button
                   className={`btn ${selectedModelId === m.id ? 'btn-gold' : 'btn-outline'}`}
-                  href="#wheel"
                   onClick={() => onSelectModel(m)}
                 >
                   אני רוצה לזכות בה 🎡
-                </a>
+                </button>
                 <a className="btn btn-primary" href={m.link} target="_blank" rel="noopener">לפרופיל שלה</a>
               </div>
             </div>

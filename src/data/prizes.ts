@@ -6,6 +6,7 @@ export interface Prize {
   gradientFrom: string
   gradientTo: string
   link: string
+  weight: number // probability weight (higher = more likely)
 }
 
 export const PRIZES: Prize[] = [
@@ -17,6 +18,7 @@ export const PRIZES: Prize[] = [
     gradientFrom: '#ff2e88',
     gradientTo: '#7a1fa2',
     link: '',
+    weight: 25,          // ~25%
   },
   {
     id: '2',
@@ -26,6 +28,7 @@ export const PRIZES: Prize[] = [
     gradientFrom: '#a855f7',
     gradientTo: '#312e81',
     link: '',
+    weight: 10,          // ~10%
   },
   {
     id: '3',
@@ -35,6 +38,7 @@ export const PRIZES: Prize[] = [
     gradientFrom: '#f43f5e',
     gradientTo: '#831843',
     link: '',
+    weight: 3,           // ~3%
   },
   {
     id: '4',
@@ -44,6 +48,7 @@ export const PRIZES: Prize[] = [
     gradientFrom: '#f59e0b',
     gradientTo: '#b91c1c',
     link: '',
+    weight: 22,          // ~22%
   },
   {
     id: '5',
@@ -53,6 +58,7 @@ export const PRIZES: Prize[] = [
     gradientFrom: '#06b6d4',
     gradientTo: '#4c1d95',
     link: '',
+    weight: 20,          // ~20%
   },
   {
     id: '6',
@@ -62,6 +68,7 @@ export const PRIZES: Prize[] = [
     gradientFrom: '#ec4899',
     gradientTo: '#1e1b4b',
     link: '',
+    weight: 15,          // ~15%
   },
   {
     id: '7',
@@ -71,5 +78,6 @@ export const PRIZES: Prize[] = [
     gradientFrom: '#8b5cf6',
     gradientTo: '#701a75',
     link: '',
+    weight: 5,           // ~5%
   },
 ]

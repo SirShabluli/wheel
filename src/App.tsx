@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import type { Model } from './data/models'
 import type { Prize } from './data/prizes'
 import { PRIZES } from './data/prizes'
@@ -7,14 +7,12 @@ import { useSpins } from './hooks/useSpins'
 import { useProfiles } from './hooks/useProfiles'
 
 import ParticleCanvas from './components/effects/ParticleCanvas'
-import RevealSection from './components/effects/RevealSection'
 import AgeGate from './components/ageGate/AgeGate'
 import HeroSection from './components/hero/HeroSection'
 import GallerySection from './components/gallery/GallerySection'
-import SpinWheel, { type SpinWheelHandle } from './components/wheel/SpinWheel'
-import SpinsCounter from './components/wheel/SpinsCounter'
 import MatchModal from './components/matchModal/MatchModal'
 import Carousel3D from './components/carousel/Carousel3D'
+import WheelModal from './components/wheel/WheelModal'
 
 import StickyCta from './components/stickyCta/StickyCta'
 
@@ -24,19 +22,24 @@ export default function App() {
   const { models: MODELS, loading } = useProfiles()
   const [winner, setWinner] = useState<Prize | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
+  const [wheelOpen, setWheelOpen] = useState(false)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
-  const wheelRef = useRef<HTMLElement>(null)
-  const spinWheelRef = useRef<SpinWheelHandle>(null)
+
+  const handleSelectModel = (model: Model) => {
+    setSelectedModel(model)
+    setWheelOpen(true)
+  }
 
   const handleResult = (prize: Prize) => {
     recordSpin()
     setWinner(prize)
+    setWheelOpen(false)
     setModalOpen(true)
   }
 
   const handleSpinAgain = () => {
     setModalOpen(false)
-    wheelRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setWheelOpen(true)
   }
 
   if (loading) return null
@@ -50,46 +53,12 @@ export default function App() {
 
       {/* Gallery - desktop only */}
       <div className="hidden md:block">
-        <GallerySection models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
+        <GallerySection models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={handleSelectModel} />
       </div>
 
-      {/* Carousel - mobile: before wheel, desktop: after wheel */}
+      {/* Carousel - mobile: before footer, desktop: after gallery */}
       <div className="md:hidden">
-        <Carousel3D models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
-      </div>
-
-      {/* Wheel Section */}
-      <section ref={wheelRef as React.RefObject<HTMLElement>} id="wheel">
-        <RevealSection><h2 className="section-title">גלגל הזכייה</h2></RevealSection>
-        <RevealSection delay={0.1}><p className="section-sub">סובב את הגלגל וזכה בפרסים בלעדיים!</p></RevealSection>
-
-        <RevealSection delay={0.2} className="wheel-wrap">
-          <SpinWheel ref={spinWheelRef} prizes={PRIZES} onResult={handleResult} disabled={!canSpin} selectedModel={selectedModel} />
-          <SpinsCounter spinsLeft={spinsLeft} maxSpins={maxSpins} />
-          <button
-            onClick={() => spinWheelRef.current?.spin()}
-            disabled={!canSpin}
-            className="btn-shine rounded-full font-black text-xl text-white transition-all hover:brightness-110 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:filter-none disabled:translate-y-0"
-            style={{
-              padding: '14px 48px',
-              background: !canSpin ? '#3a2f55' : 'linear-gradient(90deg, #ff2e88, #a855f7)',
-              boxShadow: !canSpin ? 'none' : '0 0 30px rgba(255,46,136,0.5)',
-            }}
-          >
-            {!canSpin ? 'סיבובים נגמרו' : 'סובב את הגלגל'}
-          </button>
-          {!canSpin && (
-            <div id="noSpins" className="hidden md:block">
-              <p>הסיבובים שלך נגמרו 👇</p>
-              <a href="#gallery"><button className="btn btn-gold">לכל הבנות</button></a>
-            </div>
-          )}
-        </RevealSection>
-      </section>
-
-      {/* Carousel - desktop: after wheel */}
-      <div className="hidden md:block">
-        <Carousel3D models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={setSelectedModel} />
+        <Carousel3D models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={handleSelectModel} />
       </div>
 
       <footer>
@@ -99,6 +68,17 @@ export default function App() {
         תוכן למבוגרים בלבד · 18+<br />
         כל הקישורים מובילים לעמודים רשמיים של היוצרות
       </footer>
+
+      <WheelModal
+        open={wheelOpen}
+        selectedModel={selectedModel}
+        prizes={PRIZES}
+        spinsLeft={spinsLeft}
+        maxSpins={maxSpins}
+        canSpin={canSpin}
+        onResult={handleResult}
+        onClose={() => setWheelOpen(false)}
+      />
 
       <MatchModal
         prize={modalOpen ? winner : null}
