@@ -77,28 +77,9 @@ export default function HeroSection({ models }: Props) {
         טוב, תבחר במי אתה רוצה לזכות, ותן לגלגל להחליט אם מגיע לך.
       </p>
 
-      {/* CTAs */}
-      <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 72 }}>
+      {/* CTA */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 72 }}>
         <a href="#gallery">
-          <button
-            className="btn-shine"
-            style={{
-              padding: '20px 52px',
-              fontSize: 21,
-              borderRadius: 999,
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              fontWeight: 900,
-              background: 'linear-gradient(90deg, #f5c542, #e8963a)',
-              color: '#1a1030',
-              boxShadow: '0 0 24px rgba(245,197,66,0.4)',
-            }}
-          >
-            קודם תראה את כולן
-          </button>
-        </a>
-        <a href="#wheel">
           <button
             className="btn-shine"
             style={{
@@ -114,7 +95,7 @@ export default function HeroSection({ models }: Props) {
               boxShadow: '0 0 24px rgba(255,46,136,0.55)',
             }}
           >
-            ישר לגלגל ↓
+            אני מוכן לבחור ↓
           </button>
         </a>
       </div>

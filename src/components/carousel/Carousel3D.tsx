@@ -9,7 +9,7 @@ interface Props {
 
 export default function Carousel3D({ models, selectedModelId, onSelectModel }: Props) {
   return (
-    <section className="relative z-10 py-24 overflow-hidden" id="models">
+    <section className="relative z-10 py-24 overflow-hidden" id="gallery">
       <RevealSection>
         <h2 className="section-title">
           <span className="md:hidden">הכירו את הבנות שלנו</span>
