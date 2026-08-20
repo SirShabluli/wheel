@@ -22,9 +22,12 @@ export default function StickyCta({ winner }: Props) {
       <span>
         {winner ? `זכית: ${winner.name} ${winner.emoji}` : 'עוד לא סובבת את הגלגל 🎡'}
       </span>
-      <a className="btn btn-primary" href="#gallery">
+      <button
+        className="btn btn-primary"
+        onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
+      >
         {winner ? 'סיבוב נוסף' : 'בחר דוגמנית'}
-      </a>
+      </button>
     </div>
   )
 }

@@ -79,24 +79,24 @@ export default function HeroSection({ models }: Props) {
 
       {/* CTA */}
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 72 }}>
-        <a
-          href="#gallery"
-          className="btn-shine no-underline"
+        <button
+          className="btn-shine"
+          onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
           style={{
-            display: 'inline-block',
             padding: '20px 52px',
             fontSize: 21,
             borderRadius: 999,
+            border: 'none',
+            cursor: 'pointer',
             fontFamily: 'inherit',
             fontWeight: 900,
             background: 'linear-gradient(90deg, #ff2e88, #a855f7)',
             color: '#fff',
             boxShadow: '0 0 24px rgba(255,46,136,0.55)',
-            textDecoration: 'none',
           }}
         >
           אני מוכן לבחור ↓
-        </a>
+        </button>
       </div>
 
       {/* Scroll hint */}
