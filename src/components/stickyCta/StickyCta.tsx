@@ -22,8 +22,8 @@ export default function StickyCta({ winner }: Props) {
       <span>
         {winner ? `זכית: ${winner.name} ${winner.emoji}` : 'עוד לא סובבת את הגלגל 🎡'}
       </span>
-      <a className="btn btn-primary" href="#wheel">
-        {winner ? 'סיבוב נוסף' : 'לגלגל'}
+      <a className="btn btn-primary" href="#gallery">
+        {winner ? 'סיבוב נוסף' : 'בחר דוגמנית'}
       </a>
     </div>
   )
