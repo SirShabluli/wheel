@@ -38,7 +38,11 @@ export function useProfiles() {
       .then(r => r.json())
       .then((data: Record<string, unknown>[]) => {
         const HIDDEN_HANDLES = ['@jade_teenofficial', '@itssagecollins', '@soapy_shayna', '@itsginnypotter', '@claudiatihan_official', '@NataliePopov']
-        setModels(data.map(mapProfile).filter(m => !HIDDEN_HANDLES.includes(m.tagline)))
+        const HIDDEN_NAMES = ['claudia', 'sage', 'ginny', 'jade', 'shayna', 'natali', 'natalie']
+        setModels(data.map(mapProfile).filter(m =>
+          !HIDDEN_HANDLES.includes(m.tagline) &&
+          !HIDDEN_NAMES.some(n => m.name.toLowerCase().includes(n))
+        ))
       })
       .catch(() => setError('שגיאה בטעינת פרופילים'))
       .finally(() => setLoading(false))
