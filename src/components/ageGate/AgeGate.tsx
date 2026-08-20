@@ -47,7 +47,7 @@ export default function AgeGate({ confirmed, onConfirm }: Props) {
               האם אתה מעל גיל 18 שנים?
             </p>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 px-4">
               <button
                 onClick={onConfirm}
                 className="btn btn-primary btn-shine w-full"
