@@ -60,7 +60,7 @@ export default function MatchModal({ prize, model, onClose, onSpinAgain, canSpin
           >
             {/* Prize hero — model image bg + emoji overlay */}
             <div
-              className="relative w-full flex items-center justify-center"
+              className="relative w-full flex items-end justify-center"
               style={{
                 aspectRatio: '4/3',
                 background: `linear-gradient(135deg, ${prize.gradientFrom}, ${prize.gradientTo})`,
@@ -71,11 +71,11 @@ export default function MatchModal({ prize, model, onClose, onSpinAgain, canSpin
                   src={model.img}
                   alt={model.name}
                   className="absolute inset-0 w-full h-full object-cover object-top"
-                  style={{ opacity: 0.45 }}
+                  style={{ opacity: 0.7 }}
                 />
               )}
               <motion.span
-                className="text-8xl relative z-10 drop-shadow-lg"
+                className="text-7xl relative z-10 drop-shadow-lg mb-4"
                 initial={{ scale: 0, rotate: -20 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: 'spring', damping: 10, delay: 0.2 }}
