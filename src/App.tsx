@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Model } from './data/models'
 import type { Prize } from './data/prizes'
 import { PRIZES } from './data/prizes'
@@ -24,6 +24,11 @@ export default function App() {
   const [modalOpen, setModalOpen] = useState(false)
   const [wheelOpen, setWheelOpen] = useState(false)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
+
+  useEffect(() => {
+    document.body.style.overflow = wheelOpen || modalOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [wheelOpen, modalOpen])
 
   const handleSelectModel = (model: Model) => {
     setSelectedModel(model)
@@ -82,6 +87,7 @@ export default function App() {
 
       <MatchModal
         prize={modalOpen ? winner : null}
+        model={selectedModel}
         onClose={() => setModalOpen(false)}
         onSpinAgain={handleSpinAgain}
         canSpinAgain={canSpin}

@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Prize } from '../../data/prizes'
+import type { Model } from '../../data/models'
 
 interface Props {
   prize: Prize | null
+  model: Model | null
   onClose: () => void
   onSpinAgain: () => void
   canSpinAgain: boolean
@@ -28,7 +30,7 @@ function confetti() {
   }
 }
 
-export default function MatchModal({ prize, onClose, onSpinAgain, canSpinAgain }: Props) {
+export default function MatchModal({ prize, model, onClose, onSpinAgain, canSpinAgain }: Props) {
   useEffect(() => {
     if (prize) confetti()
   }, [prize])
@@ -56,7 +58,7 @@ export default function MatchModal({ prize, onClose, onSpinAgain, canSpinAgain }
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: 'spring', damping: 15 }}
           >
-            {/* Prize emoji hero */}
+            {/* Prize hero — model image bg + emoji overlay */}
             <div
               className="relative w-full flex items-center justify-center"
               style={{
@@ -64,15 +66,23 @@ export default function MatchModal({ prize, onClose, onSpinAgain, canSpinAgain }
                 background: `linear-gradient(135deg, ${prize.gradientFrom}, ${prize.gradientTo})`,
               }}
             >
+              {model?.img && (
+                <img
+                  src={model.img}
+                  alt={model.name}
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                  style={{ opacity: 0.45 }}
+                />
+              )}
               <motion.span
-                className="text-8xl"
+                className="text-8xl relative z-10 drop-shadow-lg"
                 initial={{ scale: 0, rotate: -20 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: 'spring', damping: 10, delay: 0.2 }}
               >
                 {prize.emoji}
               </motion.span>
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(transparent 60%, #1c0e38)' }} />
+              <div className="absolute inset-0 z-5" style={{ background: 'linear-gradient(transparent 50%, #1c0e38)' }} />
             </div>
 
             <div className="px-7 pb-14 pt-2">
