@@ -50,22 +50,13 @@ export default function AgeGate({ confirmed, onConfirm }: Props) {
             <div className="flex flex-col gap-3">
               <button
                 onClick={onConfirm}
-                className="btn-shine w-full py-4 rounded-full font-black text-lg text-white transition-all hover:brightness-110 hover:-translate-y-0.5"
-                style={{
-                  background: 'linear-gradient(90deg, #ff2e88, #a855f7)',
-                  boxShadow: '0 0 24px rgba(255,46,136,0.5)',
-                }}
+                className="btn btn-primary btn-shine w-full"
               >
                 כן, אני מעל 18 — כניסה לאתר
               </button>
               <button
                 onClick={() => (window.location.href = 'https://www.google.com')}
-                className="w-full py-3 rounded-full font-bold text-sm border transition-colors hover:border-gray-400"
-                style={{
-                  background: 'transparent',
-                  color: '#9b8fb8',
-                  borderColor: 'rgba(155,143,184,0.3)',
-                }}
+                className="btn btn-outline w-full"
               >
                 עזוב אותי
               </button>
