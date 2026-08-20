@@ -81,7 +81,7 @@ export default function HeroSection({ models }: Props) {
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 72 }}>
         <button
           className="btn-shine"
-          onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
+          onClick={() => (document.getElementById('gallery-mobile') ?? document.getElementById('gallery-desktop'))?.scrollIntoView({ behavior: 'smooth' })}
           style={{
             padding: '20px 52px',
             fontSize: 21,

@@ -9,7 +9,7 @@ interface Props {
 
 export default function GallerySection({ models, selectedModelId, onSelectModel }: Props) {
   return (
-    <section id="gallery" className="relative z-10 py-24 px-6">
+    <section className="relative z-10 py-24 px-6">
       <RevealSection><h2 className="section-title">הכירו את הבנות</h2></RevealSection>
       <RevealSection delay={0.1}><p className="section-sub">תסתכל טוב. יש לך רק 3 סיבובים — כדאי לדעת במי אתה רוצה לזכות.</p></RevealSection>
 

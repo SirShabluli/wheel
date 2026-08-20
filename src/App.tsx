@@ -57,12 +57,12 @@ export default function App() {
       <HeroSection models={MODELS} />
 
       {/* Gallery - desktop only */}
-      <div className="hidden md:block">
+      <div id="gallery-desktop" className="hidden md:block">
         <GallerySection models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={handleSelectModel} />
       </div>
 
-      {/* Carousel - mobile: before footer, desktop: after gallery */}
-      <div className="md:hidden">
+      {/* Carousel - mobile only */}
+      <div id="gallery-mobile" className="md:hidden">
         <Carousel3D models={MODELS} selectedModelId={selectedModel?.id ?? null} onSelectModel={handleSelectModel} />
       </div>
 

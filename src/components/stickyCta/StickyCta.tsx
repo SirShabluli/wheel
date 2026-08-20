@@ -24,7 +24,7 @@ export default function StickyCta({ winner }: Props) {
       </span>
       <button
         className="btn btn-primary"
-        onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={() => (document.getElementById('gallery-mobile') ?? document.getElementById('gallery-desktop'))?.scrollIntoView({ behavior: 'smooth' })}
       >
         {winner ? 'סיבוב נוסף' : 'בחר דוגמנית'}
       </button>
