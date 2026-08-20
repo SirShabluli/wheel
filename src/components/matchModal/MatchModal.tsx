@@ -62,7 +62,7 @@ export default function MatchModal({ prize, model, onClose, onSpinAgain, canSpin
             <div
               className="relative w-full flex items-end justify-center"
               style={{
-                aspectRatio: '4/3',
+                aspectRatio: '3/4',
                 background: `linear-gradient(135deg, ${prize.gradientFrom}, ${prize.gradientTo})`,
               }}
             >
@@ -70,7 +70,7 @@ export default function MatchModal({ prize, model, onClose, onSpinAgain, canSpin
                 <img
                   src={model.img}
                   alt={model.name}
-                  className="absolute inset-0 w-full h-full object-cover object-top"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
                   style={{ opacity: 0.7 }}
                 />
               )}
